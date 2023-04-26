@@ -61,6 +61,11 @@ export default function Login() {
           <h1>register here!</h1>
           <input
             type="text"
+            className="register-name input-text"
+            placeholder="Name"
+          />
+          <input
+            type="text"
             className="register-username input-text"
             placeholder="User name"
           />
@@ -68,6 +73,16 @@ export default function Login() {
             type="text"
             className="register-email input-text"
             placeholder="Email"
+          />
+          <input
+            type="text"
+            className="register-phone input-text"
+            placeholder="Phone Number"
+          />
+          <input
+            type="text"
+            className="register-address input-text"
+            placeholder="Address"
           />
           <div className="register-password-container">
             <input
@@ -89,7 +104,7 @@ export default function Login() {
             <input
               type={showConfirmPassword ? "text" : "password"}
               className="register-confirm-password input-text"
-              placeholder="Password"
+              placeholder="Confirm password"
             />
             {!showConfirmPassword && (
               <EyeInvisibleOutlined
