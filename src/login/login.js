@@ -1,5 +1,5 @@
 // Component
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button, message } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
@@ -12,8 +12,18 @@ import LinkinComponent from "../iconBase/linkinIcon";
 // Styles
 import "./index.scss";
 
-export default function Login() {
+function Login(props) {
+  const { listAccount, getListAccount } = props;
+  debugger;
   const [showPassword, seShowPassword] = useState(false);
+
+  useEffect(() => {
+    debugger;
+    function fecthApi() {
+      getListAccount();
+    }
+    fecthApi();
+  }, []);
 
   const onClickEye = () => {
     seShowPassword(!showPassword);
@@ -22,6 +32,10 @@ export default function Login() {
   const [messageApiDevelop, contextHolder] = message.useMessage();
   const alertDevelop = () => {
     messageApiDevelop.info("Chức năng đang phát triển!");
+  };
+
+  const onClick = () => {
+    console.log(listAccount);
   };
 
   return (
@@ -60,7 +74,9 @@ export default function Login() {
           <Link to="/" element className="login-forgot-password">
             Forgot your password!
           </Link>
-          <button className="login-sign-btn">Sign in</button>
+          <button className="login-sign-btn" onClick={onClick}>
+            Sign in
+          </button>
           {contextHolder}
           <div className="login-social">
             <FaceIconComponent onClick={alertDevelop} />
@@ -91,3 +107,5 @@ export default function Login() {
     </div>
   );
 }
+
+export default Login;
