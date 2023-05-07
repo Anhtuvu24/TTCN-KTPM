@@ -1,0 +1,86 @@
+.header {
+    padding: 5px 20px;
+    background-color: #f6f6f6;
+    min-height: 73px;
+    max-height: 152px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-logo {
+        height: 100%;
+        display: flex;
+        .banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-left: 100px;
+            h1 {
+                display: inline-block;
+            }
+            p {
+                display: inline-block;
+            }
+        }
+        img {
+            height: 100%;
+            max-width: 155px;
+            max-height: 142px;
+        }
+    }
+
+    &-nav {
+        display: block;
+        flex: 1;
+        text-align: right;
+        p {
+            display: inline-block;
+            margin-right: 20px;
+            background-image: linear-gradient(
+                to bottom,
+                transparent 0%,
+                transparent 90%,
+                black 90%,
+                black 100%,
+            );
+            background-repeat: no-repeat;
+            background-size: 0% 100%;
+            background-position-x: right;
+            transition: background-size 300ms;
+            &:hover {
+                background-size: 100% 100%;
+                background-position-x: left;  
+                cursor: pointer;
+            }
+        }
+
+        .wrapSearch {
+            display: inline-block;
+            margin-right: 5px;
+            align-items: center;
+            position: relative;
+            input {
+                padding: 10px 25px 10px 10px;
+                border: 1px solid #ccc;
+            }
+
+            .iconSearch {
+                position: absolute;
+                right: 5px;
+                top: 50%;
+                transform: translateY(-50%);
+                background-color: #ccc;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .borderRight {
+            border-right: 1px solid black;
+            padding-right: 10px;
+        }
+    }
+}
