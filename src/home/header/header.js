@@ -1,22 +1,26 @@
-import { createRef, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { SearchOutlined, UserOutlined, ExportOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import "./index.scss";
+import { Link } from "react-router-dom";
 function Header(props) {
     const [visibleHeader, setVisibleHeader] = useState(true);
-    const [visibleBorder, setVisibleBorder] = useState(true);
     const [visibleAccount, setVisibleAcount] = useState(true);
     const [visibleSeacrh, setVisibleSearch] = useState(true);
     const [searchValue, setSearchValue] = useState("");
+    const [visibleDropDown, setVisibleDropDown] = useState(false);
     const inputRef = useRef(null);
 
-    const onLogin = () => {
+    const onClickUser = () => {
         setVisibleAcount(true);
-        setVisibleBorder(true);
+        setVisibleDropDown(!visibleDropDown);
+    }
+
+    const onMouseLeave = () => {
+        setVisibleDropDown(false);
     }
 
     const onLogout = () => {
         setVisibleAcount(false);
-        setVisibleBorder(false);
     }
 
     const onChange = (e) => {
@@ -29,8 +33,12 @@ function Header(props) {
     }
 
     const onFocus = () => {
-        console.log(inputRef.current.value);
+        if (visibleSeacrh) {
+            console.log(inputRef.current.value);
+        }
+        setVisibleSearch(!visibleSeacrh);
     }
+
     return (
         <div className="header">
             <div className="header-logo">
@@ -51,7 +59,17 @@ function Header(props) {
                 }
                 <p onClick={onFocus} className="search">Tìm kiếm <SearchOutlined /></p>
                 {/*VAT: truyền tên qua props*/}
-                <p onClick={onLogin} className={`user ${visibleBorder ? "borderRight" : ""}`}><UserOutlined /> {visibleAccount ? "name" : ""}</p>
+                <div className="wrapDropDown">
+                    <p onClick={onClickUser} className={`user ${visibleAccount ? "borderRight" : ""}`}><UserOutlined /> {visibleAccount ? "name" : ""}</p>
+                    <div onMouseLeave={onMouseLeave} className={`${visibleAccount ? "" : "leftDropDown"} ${visibleDropDown ? "menuDropDown" : "none"}`}>
+                        <Link to="/" element className="profile-user item">
+                            <p>Profile</p>
+                        </Link>
+                        <Link to="/login" element className="logout-user item">
+                            <p>Login</p>
+                        </Link>
+                    </div>
+                </div>
                 {visibleAccount && <p onClick={onLogout}><ExportOutlined /> Đăng xuất</p>}
                 {visibleAccount && <p><ShoppingCartOutlined /> (0)</p>}
             </div>

@@ -82,5 +82,57 @@
             border-right: 1px solid black;
             padding-right: 10px;
         }
+
+        .wrapDropDown {
+            position: relative;
+            display: inline-block;
+            .leftDropDown {
+                left: -40px !important;
+            }
+            .none {
+                display: none;
+            }
+            .menuDropDown {
+                position: absolute;
+                top: 110%;
+                display: flex;
+                flex-direction: column;
+                left: -20px;
+                text-align: left;
+                background-color: #fff;
+                border-radius: 5px;
+                animation: fade .6s forwards;
+                .item {
+                    padding: 10px 20px 10px 20px;
+                    p {
+                        background-image: linear-gradient(
+                        to bottom,
+                        transparent 0%,
+                        transparent 90%,
+                        black 90%,
+                        black 100%,
+                        );
+                        background-repeat: no-repeat;
+                        background-size: 0% 100%;
+                        background-position-x: right;
+                        transition: background-size 300ms;
+                        &:hover {
+                            background-size: 100% 100%;
+                            background-position-x: left;  
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
+
+@keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
