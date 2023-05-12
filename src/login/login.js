@@ -1,7 +1,7 @@
 // Component
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Button, message } from "antd";
+import { message } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 // Icon
@@ -9,13 +9,21 @@ import FaceIconComponent from "../iconBase/faceIcon";
 import GoogleIconComponent from "../iconBase/googleIcon";
 import LinkinComponent from "../iconBase/linkinIcon";
 
+// Const
+import TypeError from "../const/messageConst";
+
 // Styles
 import "./index.scss";
 
 function Login(props) {
   const { listAccount, getListAccount } = props;
-  debugger;
   const [showPassword, seShowPassword] = useState(false);
+  const [inputValue, setInputValue] = useState({
+    email: "",
+    password: "",
+  })
+  
+  const [messageError, setMessageError] = useState("");
 
   useEffect(() => {
     debugger;
@@ -24,6 +32,14 @@ function Login(props) {
     }
     fecthApi();
   }, []);
+
+  const onChange = (e) => {
+    e.persist();
+    setInputValue((inputValue) => ({
+      ...inputValue,
+      [e.target.name]: e.target.value,
+    }))
+  }
 
   const onClickEye = () => {
     seShowPassword(!showPassword);
@@ -35,7 +51,27 @@ function Login(props) {
   };
 
   const onClick = () => {
-    console.log(listAccount);
+    // console.log(listAccount);
+    const regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const strongRegex =  /^(?=.*[0-9])(?=.*[A-Z])[a-zA-Z0-9]{7,20}$/;
+    // ^(?=.*[A-Z])(?=.*\d).{7,20}$
+    if (!regEmail.test(inputValue.email)) {
+      setMessageError(TypeError.INCORRECT_EMAIL);
+    }
+    else if (inputValue.email === '' || inputValue.password === '') {
+      setMessageError(TypeError.EMPTY_MESSAGE);
+    }
+    else if (!strongRegex.test(inputValue.password)) {
+      debugger;
+      setMessageError(TypeError.INCORRECT_PASSWORDRG);
+    }
+    else {
+      setMessageError('');
+    }
+    // (?=.*[AZ]): 1 ký tự in hoa
+    // (?=.{7,20}$): 7-20 ký tự
+    // (?=.*[ -/:-@[-`{-~]): chứa ít nhất 1 ký tự
+    // (?=.*[0-9]): kiểm tra có ít nhất 1 số.
   };
 
   return (
@@ -54,12 +90,18 @@ function Login(props) {
             type="text"
             className="login-username input-text"
             placeholder="User name"
+            name="email"
+            value={inputValue.email}
+            onChange={onChange}
           />
           <div className="login-password-container">
             <input
               type={showPassword ? "text" : "password"}
               className="login-password input-text"
+              name="password"
               placeholder="Password"
+              value={inputValue.password}
+              onChange={onChange}
             />
             {!showPassword && (
               <EyeInvisibleOutlined
@@ -71,6 +113,7 @@ function Login(props) {
               <EyeOutlined className="login-eye" onClick={onClickEye} />
             )}
           </div>
+          {messageError && <p className="error-message">{messageError}</p>}
           <Link to="/" element className="login-forgot-password">
             Forgot your password!
           </Link>
