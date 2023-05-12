@@ -14,6 +14,7 @@ import TypeError from "../const/messageConst";
 
 // Styles
 import "./index.scss";
+import InputBase from "../inputBase/input";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,6 +27,51 @@ export default function Login() {
     address: "",
     phone: "",
   })
+
+  const attributesInput = {
+    userName : {
+      type: "text",
+      className: "register-username input-text",
+      placeholder: "User name",
+      name: "userName",
+      value: inputValue.userName,
+    },
+    email: {
+      type: "text",
+      className: "register-email input-text",
+      placeholder: "Email",
+      name: "email",
+      value: inputValue.email,
+    },
+    phone: {
+      type: "text",
+      className: "register-phone input-text",
+      placeholder: "Phone Number",
+      name: "phone",
+      value: inputValue.phone,
+    },
+    address: {
+      type: "text",
+      className: "register-address input-text",
+      placeholder: "Address",
+      name: "address",
+      value: inputValue.address,
+    },
+    password: {
+      type: showPassword ? "text" : "password",
+      className: "register-password input-text",
+      placeholder: "Password",
+      name: "password",
+      value: inputValue.password,
+    },
+    confirmPassword: {
+      type: showConfirmPassword ? "text" : "password",
+      className: "register-confirm-password input-text",
+      placeholder: "Confirm password",
+      name: "confirmPassword",
+      value: inputValue.confirmPassword,
+    }
+  }
   const [messageError, setMessageError] = useState("");
 
   const onChange = (e) => {
@@ -98,38 +144,13 @@ export default function Login() {
         </div>
         <div className="register">
           <h1>register here!</h1>
-          <input
-            type="text"
-            className="register-username input-text"
-            placeholder="User name"
-            name="userName"
-            value={inputValue.userName}
-            onChange={onChange}
-          />
-          <input
-            type="text"
-            className="register-email input-text"
-            placeholder="Email"
-            name="email"
-            value={inputValue.email}
-            onChange={onChange}
-          />
-          <input
-            type="text"
-            className="register-phone input-text"
-            placeholder="Phone Number"
-            name="phone"
-            value={inputValue.phone}
-            onChange={onChange}
-          />
-          <input
-            type="text"
-            className="register-address input-text"
-            placeholder="Address"
-            name="address"
-            value={inputValue.address}
-            onChange={onChange}
-          />
+          {Object.keys(attributesInput).map((key) => {
+            if(key !== "password" && key !== "confirmPassword") {
+              return (
+                <InputBase attributes={attributesInput[key]} at onChange={onChange}/>
+              )
+            }
+          })}
           <div className="register-password-container">
             <input
               type={showPassword ? "text" : "password"}

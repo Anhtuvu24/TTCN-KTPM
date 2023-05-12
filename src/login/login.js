@@ -14,6 +14,7 @@ import TypeError from "../const/messageConst";
 
 // Styles
 import "./index.scss";
+import InputBase from "../inputBase/input";
 
 function Login(props) {
   const { listAccount, getListAccount } = props;
@@ -22,8 +23,26 @@ function Login(props) {
     email: "",
     password: "",
   })
+
+  const attributesInput = {
+    email: {
+      type: "text",
+      className: "login-username input-text",
+      placeholder: "Email",
+      name: "email",
+      value: inputValue.email,
+    },
+    password: {
+      type: showPassword ? "text" : "password",
+      className: "login-password input-text",
+      placeholder: "Password",
+      name: "password",
+      value: inputValue.password,
+    },
+  }
   
   const [messageError, setMessageError] = useState("");
+  const [account, setAccount] = useState(null);
 
   useEffect(() => {
     debugger;
@@ -51,27 +70,19 @@ function Login(props) {
   };
 
   const onClick = () => {
-    // console.log(listAccount);
-    const regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const strongRegex =  /^(?=.*[0-9])(?=.*[A-Z])[a-zA-Z0-9]{7,20}$/;
-    // ^(?=.*[A-Z])(?=.*\d).{7,20}$
-    if (!regEmail.test(inputValue.email)) {
-      setMessageError(TypeError.INCORRECT_EMAIL);
-    }
-    else if (inputValue.email === '' || inputValue.password === '') {
+    listAccount.map((item, index) => {
+      if (inputValue.email === item.username && inputValue.password === item.password) {
+        setAccount(item);
+        setMessageError("");
+      }
+    })
+    if (account) {
+      console.log(account);
+    } else if (inputValue.email === "" || inputValue.password === "") {
       setMessageError(TypeError.EMPTY_MESSAGE);
+    } else {
+      setMessageError(TypeError.INCORRECT_MESSAGE);
     }
-    else if (!strongRegex.test(inputValue.password)) {
-      debugger;
-      setMessageError(TypeError.INCORRECT_PASSWORDRG);
-    }
-    else {
-      setMessageError('');
-    }
-    // (?=.*[AZ]): 1 ký tự in hoa
-    // (?=.{7,20}$): 7-20 ký tự
-    // (?=.*[ -/:-@[-`{-~]): chứa ít nhất 1 ký tự
-    // (?=.*[0-9]): kiểm tra có ít nhất 1 số.
   };
 
   return (
@@ -86,22 +97,14 @@ function Login(props) {
       <div className="login-container">
         <div className="login">
           <h1>Login here!</h1>
-          <input
-            type="text"
-            className="login-username input-text"
-            placeholder="User name"
-            name="email"
-            value={inputValue.email}
+          <InputBase 
+            attributes={attributesInput.email}
             onChange={onChange}
           />
           <div className="login-password-container">
-            <input
-              type={showPassword ? "text" : "password"}
-              className="login-password input-text"
-              name="password"
-              placeholder="Password"
-              value={inputValue.password}
-              onChange={onChange}
+            <InputBase 
+            attributes={attributesInput.password}
+            onChange={onChange}
             />
             {!showPassword && (
               <EyeInvisibleOutlined
