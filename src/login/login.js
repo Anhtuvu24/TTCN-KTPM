@@ -1,9 +1,10 @@
 // Component
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { message } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../features/slice/accountUser";
 // Icon
 import FaceIconComponent from "../iconBase/faceIcon";
 import GoogleIconComponent from "../iconBase/googleIcon";
@@ -17,12 +18,12 @@ import "./index.scss";
 import InputBase from "../inputBase/input";
 
 function Login(props) {
-  const { listAccount, getListAccount } = props;
+  const { listAccount, getListAccount, userLogin } = props;
   const [showPassword, seShowPassword] = useState(false);
   const [inputValue, setInputValue] = useState({
     email: "",
     password: "",
-  })
+  });
 
   const attributesInput = {
     email: {
@@ -39,8 +40,9 @@ function Login(props) {
       name: "password",
       value: inputValue.password,
     },
-  }
-  
+  };
+  const navigate = useNavigate();
+
   const [messageError, setMessageError] = useState("");
   const [account, setAccount] = useState(null);
 
@@ -50,38 +52,45 @@ function Login(props) {
       getListAccount();
     }
     fecthApi();
-  }, []);
+    if (userLogin) {
+      navigate("/");
+    }
+  }, [userLogin]);
 
   const onChange = (e) => {
     e.persist();
     setInputValue((inputValue) => ({
       ...inputValue,
       [e.target.name]: e.target.value,
-    }))
-  }
+    }));
+  };
 
   const onClickEye = () => {
     seShowPassword(!showPassword);
   };
 
   const [messageApiDevelop, contextHolder] = message.useMessage();
+  const dispatch = useDispatch();
   const alertDevelop = () => {
     messageApiDevelop.info("Chức năng đang phát triển!");
   };
 
   const onClick = () => {
     listAccount.map((item, index) => {
-      if (inputValue.email === item.username && inputValue.password === item.password) {
+      if (
+        inputValue.email === item.username &&
+        inputValue.password === item.password
+      ) {
         setAccount(item);
+        dispatch(loginSuccess(item));
         setMessageError("");
       }
-    })
-    if (account) {
-      console.log(account);
-    } else if (inputValue.email === "" || inputValue.password === "") {
+    });
+    if (inputValue.email === "" || inputValue.password === "") {
       setMessageError(TypeError.EMPTY_MESSAGE);
-    } else {
+    } else if (account) {
       setMessageError(TypeError.INCORRECT_MESSAGE);
+      debugger;
     }
   };
 
@@ -97,14 +106,11 @@ function Login(props) {
       <div className="login-container">
         <div className="login">
           <h1>Login here!</h1>
-          <InputBase 
-            attributes={attributesInput.email}
-            onChange={onChange}
-          />
+          <InputBase attributes={attributesInput.email} onChange={onChange} />
           <div className="login-password-container">
-            <InputBase 
-            attributes={attributesInput.password}
-            onChange={onChange}
+            <InputBase
+              attributes={attributesInput.password}
+              onChange={onChange}
             />
             {!showPassword && (
               <EyeInvisibleOutlined

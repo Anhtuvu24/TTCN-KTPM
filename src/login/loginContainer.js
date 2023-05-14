@@ -5,8 +5,11 @@ import Login from "./login";
 
 const mapStateToProps = (state, ownProps) => {
   const listAccount = state.listAccount.list;
+  const userLogin = state.user.currentUser;
+
   return {
     listAccount,
+    userLogin,
     // getListActive: getListActive(todoListRD),
     // getListComplete: getListComplete(todoListRD),
   };

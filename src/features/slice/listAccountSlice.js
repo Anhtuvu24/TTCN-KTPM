@@ -28,7 +28,7 @@ const listAccount = createSlice({
     //   };
     // },
     getListAC: (state, action) => {
-      debugger;
+      // debugger;
       const new_List = List(action.payload);
       return {
         ...state,
