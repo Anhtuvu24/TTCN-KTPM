@@ -47,7 +47,6 @@ function Login(props) {
   const [account, setAccount] = useState(null);
 
   useEffect(() => {
-    debugger;
     function fecthApi() {
       getListAccount();
     }
@@ -55,7 +54,7 @@ function Login(props) {
     if (userLogin) {
       navigate("/");
     }
-  }, [userLogin]);
+  }, [userLogin, account]);
 
   const onChange = (e) => {
     e.persist();
@@ -75,8 +74,15 @@ function Login(props) {
     messageApiDevelop.info("Chức năng đang phát triển!");
   };
 
+  const checkLogin = () => {
+    if (inputValue.email === "" || inputValue.password === "") {
+      setMessageError(TypeError.EMPTY_MESSAGE);
+    } else if (!account) {
+      setMessageError(TypeError.INCORRECT_MESSAGE);
+    }
+  }
+
   const onClick = () => {
-    debugger;
     listAccount.map((item, index) => {
       if (
         inputValue.email === item.username &&
@@ -87,12 +93,17 @@ function Login(props) {
         setMessageError("");
       }
     });
-    if (inputValue.email === "" || inputValue.password === "") {
-      setMessageError(TypeError.EMPTY_MESSAGE);
-    } else if (!account) {
-      setMessageError(TypeError.INCORRECT_MESSAGE);
-    }
+    setTimeout(() => {
+      checkLogin()
+    }, 300)
   };
+
+  const onKeyPress = (e) => {
+    console.log("check");
+    if(e.which === 13) {
+      onClick();
+    }
+  }
 
   return (
     <div
@@ -106,11 +117,12 @@ function Login(props) {
       <div className="login-container">
         <div className="login">
           <h1>Login here!</h1>
-          <InputBase attributes={attributesInput.email} onChange={onChange} />
+          <InputBase  onKeyDown={onKeyPress}  attributes={attributesInput.email} onChange={onChange} />
           <div className="login-password-container">
             <InputBase
               attributes={attributesInput.password}
-              onChange={onChange}
+              onChange={onChange}  
+              onKeyDown={onKeyPress} 
             />
             {!showPassword && (
               <EyeInvisibleOutlined
