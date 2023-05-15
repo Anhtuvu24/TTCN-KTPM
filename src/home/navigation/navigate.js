@@ -11,14 +11,16 @@ function Navigation(props) {
     },
     nationalJersey: {
       text: "Áo đội tuyển quốc gia",
-      firstChild: {
-        text1: {
+      firstChild: [
+        {
+          id: 1,
           text: "text1",
         },
-        text2: {
+        {
+          id: 2,
           text: "text2",
         },
-      },
+      ],
     },
     clubJersey: {
       text: "Áo CLB",
@@ -39,19 +41,19 @@ function Navigation(props) {
   const [navChildVisible, setNavChildVisible] = useState(false);
   const [focusMenuChild, setFocusMenuChild] = useState(false);
   const onMouseEnter = () => {
-    setNavChildVisible(true);
-    console.log(focusMenuChild);
+    // console.log(focusMenuChild);
+    // setNavChildVisible(true);
   };
   const onMouseLeave = () => {
-    setNavChildVisible(false);
+    //setNavChildVisible(false);
   };
   const onEnterChild = () => {
-    setFocusMenuChild(true);
+    //setFocusMenuChild(true);
   };
   const onLeave = () => {
-    if (!focusMenuChild) {
-      setNavChildVisible(false);
-    }
+    // if (!focusMenuChild) {
+    //   setNavChildVisible(false);
+    // }
   };
   return (
     <div className="nav-Container">
@@ -74,14 +76,12 @@ function Navigation(props) {
               <div
                 onMouseLeave={onMouseLeave}
                 onMouseEnter={onEnterChild}
-                className={navChildVisible ? "nav-child" : "none"}
+                className={"nav-child"}
               >
-                {Object.keys(items[key].firstChild).map((keyChild) => {
+                {items[key].firstChild.map((keyChild) => {
                   return (
-                    <div className="nav-child-item">
-                      <p className="item">
-                        {items[key].firstChild[keyChild].text}
-                      </p>
+                    <div key={keyChild.id} className="nav-child-item">
+                      <p className="item">{keyChild.text}</p>
                     </div>
                   );
                 })}

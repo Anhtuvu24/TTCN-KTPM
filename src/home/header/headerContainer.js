@@ -5,9 +5,11 @@ import Header from "./header";
 
 const mapStateToProps = (state, ownProps) => {
   const userLogin = state.user.currentUser;
+  const onVisible = ownProps.onVisible;
   // debugger;
   return {
     userLogin,
+    onVisible,
   };
 };
 

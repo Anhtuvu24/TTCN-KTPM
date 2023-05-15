@@ -76,6 +76,7 @@ function Login(props) {
   };
 
   const onClick = () => {
+    debugger;
     listAccount.map((item, index) => {
       if (
         inputValue.email === item.username &&
@@ -88,9 +89,8 @@ function Login(props) {
     });
     if (inputValue.email === "" || inputValue.password === "") {
       setMessageError(TypeError.EMPTY_MESSAGE);
-    } else if (account) {
+    } else if (!account) {
       setMessageError(TypeError.INCORRECT_MESSAGE);
-      debugger;
     }
   };
 

@@ -146,19 +146,14 @@ export default function Login() {
               return (
                 <InputBase
                   attributes={attributesInput[key]}
-                  at
                   onChange={onChange}
                 />
               );
             }
           })}
           <div className="register-password-container">
-            <input
-              type={showPassword ? "text" : "password"}
-              className="register-password input-text"
-              placeholder="Password"
-              name="password"
-              value={inputValue.password}
+            <InputBase
+              attributes={attributesInput.password}
               onChange={onChange}
             />
             {!showPassword && (
@@ -172,12 +167,8 @@ export default function Login() {
             )}
           </div>
           <div className="register-confirm-password-container">
-            <input
-              type={showConfirmPassword ? "text" : "password"}
-              className="register-confirm-password input-text"
-              placeholder="Confirm password"
-              name="confirmPassword"
-              value={inputValue.confirmPassword}
+            <InputBase
+              attributes={attributesInput.confirmPassword}
               onChange={onChange}
             />
             {!showConfirmPassword && (
