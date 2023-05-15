@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { message } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import InputBase from "../inputBase/input";
 
 // Icon
 import FaceIconComponent from "../iconBase/faceIcon";
@@ -14,7 +15,6 @@ import TypeError from "../const/messageConst";
 
 // Styles
 import "./index.scss";
-import InputBase from "../inputBase/input";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,10 +26,10 @@ export default function Login() {
     confirmPassword: "",
     address: "",
     phone: "",
-  })
+  });
 
   const attributesInput = {
-    userName : {
+    userName: {
       type: "text",
       className: "register-username input-text",
       placeholder: "User name",
@@ -70,16 +70,16 @@ export default function Login() {
       placeholder: "Confirm password",
       name: "confirmPassword",
       value: inputValue.confirmPassword,
-    }
-  }
+    },
+  };
   const [messageError, setMessageError] = useState("");
 
   const onChange = (e) => {
     setInputValue((inputValue) => ({
       ...inputValue,
       [e.target.name]: e.target.value,
-    }))
-  }
+    }));
+  };
 
   const onClickEye = () => {
     setShowPassword(!showPassword);
@@ -96,21 +96,18 @@ export default function Login() {
 
   const onClick = () => {
     // console.log(listAccount);
-    const regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const strongRegex =  /^(?=.*[0-9])(?=.*[A-Z])[a-zA-Z0-9]{7,20}$/;
+    const regEmail =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const strongRegex = /^(?=.*[0-9])(?=.*[A-Z])[a-zA-Z0-9]{7,20}$/;
     // ^(?=.*[A-Z])(?=.*\d).{7,20}$
     if (!regEmail.test(inputValue.email)) {
       setMessageError(TypeError.INCORRECT_EMAIL);
-    }
-    else if (inputValue.email === '' || inputValue.password === '') {
+    } else if (inputValue.email === "" || inputValue.password === "") {
       setMessageError(TypeError.EMPTY_MESSAGE);
-    }
-    else if (!strongRegex.test(inputValue.password)) {
-      debugger;
+    } else if (!strongRegex.test(inputValue.password)) {
       setMessageError(TypeError.INCORRECT_PASSWORDRG);
-    }
-    else {
-      setMessageError('');
+    } else {
+      setMessageError("");
     }
   };
 
@@ -145,10 +142,14 @@ export default function Login() {
         <div className="register">
           <h1>register here!</h1>
           {Object.keys(attributesInput).map((key) => {
-            if(key !== "password" && key !== "confirmPassword") {
+            if (key !== "password" && key !== "confirmPassword") {
               return (
-                <InputBase attributes={attributesInput[key]} at onChange={onChange}/>
-              )
+                <InputBase
+                  attributes={attributesInput[key]}
+                  at
+                  onChange={onChange}
+                />
+              );
             }
           })}
           <div className="register-password-container">
@@ -193,7 +194,9 @@ export default function Login() {
             )}
           </div>
           {messageError && <p className="error-message">{messageError}</p>}
-          <button onClick={onClick} className="register-sign-btn">Register</button>
+          <button onClick={onClick} className="register-sign-btn">
+            Register
+          </button>
           {contextHolder}
           <div className="register-social">
             <FaceIconComponent onClick={alertDevelop} />

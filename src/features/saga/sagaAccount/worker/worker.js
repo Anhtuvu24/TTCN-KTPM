@@ -15,6 +15,6 @@ import { getListAC } from "../../../slice/listAccountSlice";
 
 export function* sgGetList() {
   const res = yield instance.get(`itemID`);
-  debugger;
+  // debugger;
   yield put(getListAC(res.data));
 }
