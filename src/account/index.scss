@@ -69,7 +69,12 @@
       h1 {
         margin-bottom: 30px;
       }
-      p {
+      .error-message {
+        color: red;
+        font-size: 15px;
+        margin-top: 20px;
+      }
+      .back-profile {
         display: inline-block;
         margin: 10px;
         color: blue;

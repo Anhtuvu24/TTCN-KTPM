@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import avatarSimple from "../avatarImg/avatarSimple.jpg";
 import InputBase from "../inputBase/input";
 import "./index.scss";
+import TypeError from "../const/messageConst";
 
 function AccountAbout(props) {
   const { onVisible, userLogin } = props;
   const [modalChangePasss, setModalChangPass] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [inputValue, setInputValue] = useState({
     userName: userLogin.username,
     email: userLogin.username,
@@ -15,10 +17,8 @@ function AccountAbout(props) {
     address: userLogin.address,
     phone: userLogin.phone,
     date: "",
-    sex: "",
+    sex: userLogin.sex,
   });
-
-  console.log(userLogin);
 
   const attributesInput = {
     userName: {
@@ -75,7 +75,7 @@ function AccountAbout(props) {
       type: "password",
       className: "profile-new-password input-text",
       placeholder: "New password",
-      name: "new-password",
+      name: "newPassword",
       value: inputValue.newPassword,
       defaultValue: "",
     },
@@ -83,7 +83,7 @@ function AccountAbout(props) {
       type: "password",
       className: "profile-confirm-new-password input-text",
       placeholder: "Confirm password",
-      name: "confirm-password",
+      name: "confirmNewPassword",
       value: inputValue.newPassword,
       defaultValue: "",
     },
@@ -98,6 +98,31 @@ function AccountAbout(props) {
       [e.target.name]: e.target.value,
     }));
   };
+
+  const checkInput = () => {
+    if (inputValue.password === "" || inputValue.newPassword === "" || inputValue.confirmNewPassword === "") {
+      setErrorMessage(TypeError.EMPTY_MESSAGE);
+    } else if (inputValue.password !== userLogin.password) {
+      setErrorMessage(TypeError.INCORRECT_PASSWORD)
+    } else if (inputValue.newPassword !== inputValue.confirmNewPassword) {
+      setErrorMessage(TypeError.INCORRECT_CONFIRM_PASSWORD)
+    } else {
+      setErrorMessage("");
+    }
+  }
+
+  const onClick = () => {
+    console.log(inputValue);
+    setTimeout(() => {
+      checkInput();
+    }, 300)
+  }
+
+  const onKeyPress = (e) => {
+    if(e.which === 13) {
+      onClick();
+    }
+  }
 
   const changeModal = () => {
     setModalChangPass(!modalChangePasss);
@@ -132,7 +157,7 @@ function AccountAbout(props) {
                   type="radio"
                   name="sex"
                   value="Nam"
-                  checked={userLogin.sex === "Nam"}
+                  checked={inputValue.sex === "Nam"}
                 />{" "}
                 Nam
                 <input
@@ -140,11 +165,10 @@ function AccountAbout(props) {
                   type="radio"
                   name="sex"
                   value="Nữ"
-                  checked={userLogin.sex === "Nữ"}
+                  checked={inputValue.sex === "Nữ"}
                 />{" "}
                 Nữ
               </div>
-
               <div className="button-container">
                 <button>Cập nhật</button>
                 <button onClick={changeModal}>Đổi mật khẩu</button>
@@ -159,11 +183,14 @@ function AccountAbout(props) {
                 <InputBase
                   attributes={attributesPass[key]}
                   onChange={onChange}
+                  onKeyDown={onKeyPress}
+
                 />
               );
             })}
-            <p onClick={changeModal}>Trở về trang thông tin</p>
-            <button>Cập nhật</button>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+            <p className="back-profile" onClick={changeModal}>Trở về trang thông tin</p>
+            <button onClick={onClick}>Cập nhật</button>
           </div>
         )}
       </div>

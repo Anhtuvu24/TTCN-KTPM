@@ -10,7 +10,6 @@ const userSlice = createSlice({
       state.currentUser = action.payload;
     },
     logoutSucess: (state, action) => {
-      debugger;
       state.currentUser = null;
     },
   },

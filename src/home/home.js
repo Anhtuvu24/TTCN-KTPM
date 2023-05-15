@@ -2,6 +2,7 @@ import Navigation from "./navigation/navigate";
 import HeaderContainer from "./header/headerContainer";
 import Slide from "./slider/slide";
 import AccountAbout from "../account/account";
+import Content from "./content/content";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -13,9 +14,9 @@ export default function Home(props) {
     setVisibleModal(!visibleModal);
   };
   useEffect(() => {
-    if (!userLogin) {
-      navigate("/login");
-    }
+    // if (!userLogin) {
+    //   navigate("/login");
+    // }
   }, [userLogin]);
   return (
     <div>
@@ -25,6 +26,7 @@ export default function Home(props) {
       {visibleModal && (
         <AccountAbout userLogin={userLogin} onVisible={onVisible} />
       )}
+      <Content/>
     </div>
   );
 }
