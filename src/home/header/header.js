@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { logoutSucess } from "../../features/slice/accountUser";
 import { useDispatch } from "react-redux";
 function Header(props) {
-  const { userLogin } = props;
+  const { userLogin, onVisible } = props;
   const dispatch = useDispatch();
   // debugger;
   const [searchValue, setSearchValue] = useState("");
@@ -76,7 +76,7 @@ function Header(props) {
             }`}
           >
             <Link to="/" element className="profile-user item">
-              <p>Profile</p>
+              <p onClick={onVisible}>Profile</p>
             </Link>
             <Link to="/login" element className="logout-user item">
               <p>Login</p>
