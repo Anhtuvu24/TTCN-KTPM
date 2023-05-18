@@ -4,6 +4,7 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     currentUser: null,
+    cart: null,
   },
   reducers: {
     loginSuccess: (state, action) => {
