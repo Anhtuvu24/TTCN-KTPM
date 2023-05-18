@@ -10,12 +10,16 @@ import { Link } from "react-router-dom";
 import { logoutSucess } from "../../features/slice/accountUser";
 import { useDispatch } from "react-redux";
 function Header(props) {
-  const { userLogin, onVisible } = props;
+  const { userLogin, onVisible, onVisibleModalCart } = props;
   const dispatch = useDispatch();
   // debugger;
   const [searchValue, setSearchValue] = useState("");
   const [visibleDropDown, setVisibleDropDown] = useState(false);
   const inputRef = useRef(null);
+
+  const openModalCart = () => {
+    onVisibleModalCart();
+  };
 
   const onClickUser = () => {
     setVisibleDropDown(!visibleDropDown);
@@ -88,7 +92,7 @@ function Header(props) {
           </p>
         )}
         {userLogin && (
-          <p>
+          <p onClick={openModalCart}>
             <ShoppingCartOutlined /> (0)
           </p>
         )}

@@ -5,6 +5,7 @@ import AccountAbout from "../account/account";
 import Content from "./content/content";
 import VideoIFrame from "./video/videoIframe";
 import Footer from "./footer/footer";
+import CartContainer from "../cart/cartContainer";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -12,8 +13,14 @@ export default function Home(props) {
   const navigate = useNavigate();
   const { userLogin } = props;
   const [visibleModalUser, setVisibleModalUser] = useState(false);
+  const [visibleModalCart, setVisibleModalCart] = useState(true);
+  const [numberProduct, setNumberProduct] = useState(0);
   const onVisible = () => {
     setVisibleModalUser(!visibleModalUser);
+  };
+
+  const onVisibleModalCart = () => {
+    setVisibleModalCart(!visibleModalCart);
   };
   useEffect(() => {
     // if (!userLogin) {
@@ -22,11 +29,17 @@ export default function Home(props) {
   }, [userLogin]);
   return (
     <div>
-      <HeaderContainer onVisible={onVisible} />
+      <HeaderContainer
+        onVisibleModalCart={onVisibleModalCart}
+        onVisible={onVisible}
+      />
       <Navigation />
       <Slide />
       {visibleModalUser && (
         <AccountAbout userLogin={userLogin} onVisible={onVisible} />
+      )}
+      {visibleModalCart && (
+        <CartContainer onVisibleModalCart={onVisibleModalCart} />
       )}
       <Content />
       <VideoIFrame />

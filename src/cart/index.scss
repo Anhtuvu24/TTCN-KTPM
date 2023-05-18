@@ -1,0 +1,104 @@
+.modal-cart {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.321);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  .container {
+    background-color: #fff;
+    height: 600px;
+    overflow: auto;
+    padding: 10px;
+    h1 {
+      margin: 10px 0px;
+    }
+    .title-column {
+      display: grid;
+      grid-template-columns: 567px 195px 182px 195px;
+      border-bottom: 1px solid #ccc;
+      border-top: 1px solid #ccc;
+      margin-bottom: 10px;
+      p {
+        display: inline-block;
+        text-align: center;
+        padding: 30px 15px;
+      }
+    }
+    .items {
+      .item {
+        display: grid;
+        grid-template-columns: 567px 195px 182px 195px;
+        align-items: center;
+        text-align: center;
+        border-bottom: 1px solid #ccc;
+        padding: 10px 0px;
+        .review {
+          display: flex;
+          padding: 0 100px;
+          img {
+            width: 150px;
+            aspect-ratio: 1;
+            margin-right: 20px;
+          }
+          .infor {
+            text-align: left;
+            h2 {
+              margin-bottom: 10px;
+            }
+          }
+        }
+        .price {
+          p {
+            font-size: 20px;
+            font-weight: bold;
+          }
+        }
+        .number {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          p {
+            display: inline-block;
+            padding: 10px;
+          }
+        }
+      }
+    }
+    .final-price {
+      margin-top: 10px;
+      padding-right: 70px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      p {
+        font-size: 30px;
+      }
+      .price {
+        margin-left: 10px;
+        color: red;
+        font-weight: 600;
+      }
+    }
+    .btn-container {
+      text-align: right;
+      margin-top: 10px;
+      button {
+        padding: 10px;
+        width: 150px;
+        margin: 10px;
+        border: unset;
+        border-radius: 5px;
+        &:hover {
+          cursor: pointer;
+          background-color: #000;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
