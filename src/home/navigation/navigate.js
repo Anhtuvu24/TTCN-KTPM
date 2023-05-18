@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { DownOutlined } from "@ant-design/icons";
 
 // Style
@@ -14,16 +14,50 @@ function Navigation(props) {
       firstChild: [
         {
           id: 1,
-          text: "text1",
+          text: "Việt Nam",
         },
         {
           id: 2,
-          text: "text2",
+          text: "Hàn Quốc",
+        },
+        {
+          id: 3,
+          text: "Trung Quốc",
+        },
+        {
+          id: 4,
+          text: "Nhật Bản",
+        },
+        {
+          id: 5,
+          text: "Quatar",
         },
       ],
     },
     clubJersey: {
       text: "Áo CLB",
+      firstChild: [
+        {
+          id: 1,
+          text: "Manchester City",
+        },
+        {
+          id: 2,
+          text: "Liverpool",
+        },
+        {
+          id: 3,
+          text: "Chelsea",
+        },
+        {
+          id: 4,
+          text: "Real Madrid",
+        },
+        {
+          id: 5,
+          text: "Bayern Munich",
+        },
+      ],
     },
     noneLogoJersey: {
       text: "Áo không logo",
@@ -38,8 +72,6 @@ function Navigation(props) {
       text: "Áo trẻ em",
     },
   };
-  const [navChildVisible, setNavChildVisible] = useState(false);
-  const [focusMenuChild, setFocusMenuChild] = useState(false);
   const onMouseEnter = () => {
     // console.log(focusMenuChild);
     // setNavChildVisible(true);

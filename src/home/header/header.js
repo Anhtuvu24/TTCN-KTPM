@@ -15,7 +15,6 @@ function Header(props) {
   // debugger;
   const [searchValue, setSearchValue] = useState("");
   const [visibleDropDown, setVisibleDropDown] = useState(false);
-  const [visibleModalIF, setVisibleModalIF] = useState(true);
   const inputRef = useRef(null);
 
   const onClickUser = () => {

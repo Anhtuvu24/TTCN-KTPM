@@ -3,15 +3,17 @@ import HeaderContainer from "./header/headerContainer";
 import Slide from "./slider/slide";
 import AccountAbout from "../account/account";
 import Content from "./content/content";
+import VideoIFrame from "./video/videoIframe";
+import Footer from "./footer/footer";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 export default function Home(props) {
   const navigate = useNavigate();
   const { userLogin } = props;
-  const [visibleModal, setVisibleModal] = useState(false);
+  const [visibleModalUser, setVisibleModalUser] = useState(false);
   const onVisible = () => {
-    setVisibleModal(!visibleModal);
+    setVisibleModalUser(!visibleModalUser);
   };
   useEffect(() => {
     // if (!userLogin) {
@@ -23,10 +25,12 @@ export default function Home(props) {
       <HeaderContainer onVisible={onVisible} />
       <Navigation />
       <Slide />
-      {visibleModal && (
+      {visibleModalUser && (
         <AccountAbout userLogin={userLogin} onVisible={onVisible} />
       )}
-      <Content/>
+      <Content />
+      <VideoIFrame />
+      <Footer />
     </div>
   );
 }

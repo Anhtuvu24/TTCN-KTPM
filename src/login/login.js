@@ -54,6 +54,7 @@ function Login(props) {
     if (userLogin) {
       navigate("/");
     }
+    console.log(listAccount);
   }, [userLogin, account]);
 
   const onChange = (e) => {
@@ -80,7 +81,7 @@ function Login(props) {
     } else if (!account) {
       setMessageError(TypeError.INCORRECT_MESSAGE);
     }
-  }
+  };
 
   const onClick = () => {
     listAccount.map((item, index) => {
@@ -94,16 +95,16 @@ function Login(props) {
       }
     });
     setTimeout(() => {
-      checkLogin()
-    }, 300)
+      checkLogin();
+    }, 300);
   };
 
   const onKeyPress = (e) => {
     console.log("check");
-    if(e.which === 13) {
+    if (e.which === 13) {
       onClick();
     }
-  }
+  };
 
   return (
     <div
@@ -117,12 +118,16 @@ function Login(props) {
       <div className="login-container">
         <div className="login">
           <h1>Login here!</h1>
-          <InputBase  onKeyDown={onKeyPress}  attributes={attributesInput.email} onChange={onChange} />
+          <InputBase
+            onKeyDown={onKeyPress}
+            attributes={attributesInput.email}
+            onChange={onChange}
+          />
           <div className="login-password-container">
             <InputBase
               attributes={attributesInput.password}
-              onChange={onChange}  
-              onKeyDown={onKeyPress} 
+              onChange={onChange}
+              onKeyDown={onKeyPress}
             />
             {!showPassword && (
               <EyeInvisibleOutlined
