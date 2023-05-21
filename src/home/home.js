@@ -13,7 +13,7 @@ export default function Home(props) {
   const navigate = useNavigate();
   const { userLogin } = props;
   const [visibleModalUser, setVisibleModalUser] = useState(false);
-  const [visibleModalCart, setVisibleModalCart] = useState(true);
+  const [visibleModalCart, setVisibleModalCart] = useState(false);
   const [numberProduct, setNumberProduct] = useState(0);
   const onVisible = () => {
     setVisibleModalUser(!visibleModalUser);

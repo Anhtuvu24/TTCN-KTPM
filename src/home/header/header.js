@@ -8,15 +8,17 @@ import {
 import "./index.scss";
 import { Link } from "react-router-dom";
 import { logoutSucess } from "../../features/slice/accountUser";
+import { clearCart } from "../../features/slice/cart";
 import { useDispatch } from "react-redux";
 function Header(props) {
-  const { userLogin, onVisible, onVisibleModalCart } = props;
+  const { userLogin, onVisible, onVisibleModalCart, cart } = props;
   const dispatch = useDispatch();
   // debugger;
   const [searchValue, setSearchValue] = useState("");
   const [visibleDropDown, setVisibleDropDown] = useState(false);
   const inputRef = useRef(null);
-
+  const numberItem = cart.reduce((sum, item) => sum + item.number, 0);
+  console.log(numberItem);
   const openModalCart = () => {
     onVisibleModalCart();
   };
@@ -31,6 +33,7 @@ function Header(props) {
 
   const onLogout = () => {
     dispatch(logoutSucess());
+    dispatch(clearCart()); // VAT clear gio hang khi dang xuat
   };
 
   const onChange = (e) => {
@@ -78,9 +81,11 @@ function Header(props) {
               visibleDropDown ? "menuDropDown" : "none"
             }`}
           >
-            <Link to="/" element className="profile-user item">
-              <p onClick={onVisible}>Profile</p>
-            </Link>
+            {userLogin && (
+              <div className="profile-user item">
+                <p onClick={onVisible}>Profile</p>
+              </div>
+            )}
             <Link to="/login" element className="logout-user item">
               <p>Login</p>
             </Link>
@@ -93,7 +98,7 @@ function Header(props) {
         )}
         {userLogin && (
           <p onClick={openModalCart}>
-            <ShoppingCartOutlined /> (0)
+            <ShoppingCartOutlined /> ({numberItem})
           </p>
         )}
       </div>

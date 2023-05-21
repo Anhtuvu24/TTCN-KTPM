@@ -1,20 +1,16 @@
+import React from "react";
 import { connect } from "react-redux";
+import ItemProduct from "./item";
 import { createSelector } from "reselect";
 // import { getListAccount } from "../features/saga/sagaAccount/typeAccountSaga";
-import Header from "./header";
 
 const mapStateToProps = (state, ownProps) => {
-  const userLogin = state.user.currentUser;
   const cart = state.cart.currentListCart;
-  const onVisible = ownProps.onVisible;
-  // debugger;
   return {
-    userLogin,
-    onVisible,
     cart,
   };
 };
 
-const HeaderContainer = connect(mapStateToProps)(Header);
+const ItemProductContainer = connect(mapStateToProps)(ItemProduct);
 
-export default HeaderContainer;
+export default ItemProductContainer;

@@ -6,12 +6,6 @@ import { listTypeItem } from "../../const/typeItem";
 import "./index.scss";
 
 function Content(props) {
-  const [itemNewShow, setItemNewShow] = useState(4);
-  const newItem = listItem.filter((item) => item.type === "newItem");
-  const showMore = () => {
-    setItemNewShow(itemNewShow + 4);
-  };
-
   return (
     <div className="content-container">
       {listTypeItem &&

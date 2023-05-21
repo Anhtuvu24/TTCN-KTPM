@@ -3,6 +3,7 @@ import createSagaMiddleware from "@redux-saga/core";
 import rootSaga from "./rootSaga";
 import reducerAccount from "../features/slice/listAccountSlice";
 import reducerUser from "../features/slice/accountUser";
+import reducerCart from "../features/slice/cart";
 import {
   persistStore,
   persistReducer,
@@ -25,6 +26,7 @@ const sagaMiddleware = createSagaMiddleware();
 const reducer = combineReducers({
   listAccount: reducerAccount,
   user: reducerUser,
+  cart: reducerCart,
 });
 const persistedReducer = persistReducer(persistConfig, reducer);
 

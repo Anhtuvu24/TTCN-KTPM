@@ -5,9 +5,11 @@ import Cart from "./cart";
 
 const mapStateToProps = (state, ownProps) => {
   const userLogin = state.user.currentUser;
+  const cart = state.cart.currentListCart;
   //   debugger;
   return {
     userLogin,
+    cart,
   };
 };
 
