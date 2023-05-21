@@ -1,24 +1,41 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useRef, useState } from "react";
-import cart from "../cart";
+// import cart from "../cart";
 import Remove from "../iconBase/remove";
 import Add from "../iconBase/add";
+import {
+  addProduct,
+  removeOneProduct,
+  removeProduct,
+} from "../features/slice/cart";
+import { useDispatch } from "react-redux";
 import "./index.scss";
+import ProductItem from "./itemProduct";
 
 function Cart(props) {
-  const { userLogin, onVisibleModalCart } = props;
+  const { userLogin, onVisibleModalCart, cart } = props;
+  const dispatch = useDispatch();
   //   const [totalPrice, setTotalPrice] = useState(0);
-  const cartUser = cart.filter((item) => item.id === userLogin.id);
-  const listProduct = cartUser[0].items;
-  const ref = useRef();
-
-  let totalPrice = 0;
-  for (let i = 0; i < listProduct.length; i++) {
-    totalPrice += listProduct[i].price * listProduct[i].number;
-  }
-
+  // const cartUser = cart.filter((item) => item.id === userLogin.id);
+  // const listProduct = cartUser[0].items;
+  const totalPrice = cart.reduce(
+    (sum, item) => sum + item.price * item.number,
+    0
+  );
   const onCloseModal = () => {
     onVisibleModalCart();
+  };
+
+  const onAdd = (item) => {
+    dispatch(addProduct(item));
+  };
+
+  const onRemoveOne = (item) => {
+    dispatch(removeOneProduct(item));
+  };
+
+  const removeProduct = (item) => {
+    dispatch(removeProduct(item));
   };
 
   function formatCash(str) {
@@ -29,11 +46,6 @@ function Cart(props) {
         return (index % 3 ? next : next + ",") + prev;
       });
   }
-
-  const onAdd = () => {
-    console.log("Check");
-    ref.current.value += 1;
-  };
 
   const handleClick = (e) => {
     e.stopPropagation();
@@ -49,43 +61,41 @@ function Cart(props) {
           <p>Số lượng</p>
           <p>Tổng giá</p>
         </div>
-        <div className="items">
-          {listProduct.map((item, index) => {
-            return (
-              <div className="item">
-                <div className="review">
-                  <img src={item.src} />
-                  <div className="infor">
-                    <h2>{item.name}</h2>
-                    <p>Mã sản phẩm: {item.ID}</p>
-                    <p>Màu sắc: {item.color}</p>
-                    <p>Kích cỡ: {item.size}</p>
-                  </div>
-                </div>
-                <div className="price">
-                  <p>{formatCash(`${item.price}`)}đ</p>
-                </div>
-                <div className="number">
-                  <Remove />
-                  <p ref={ref}>{item.number}</p>
-                  <Add onClick={onAdd} />
-                </div>
-                <div className="total-price">
-                  {formatCash(`${item.number * item.price}`)}đ
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        <div className="final-price">
-          <p>Tổng tiền: </p>
-          <p className="price">{formatCash(`${totalPrice}`)}đ</p>
-        </div>
+        {cart.length ? (
+          <>
+            <div className="items">
+              {cart.map((item, index) => {
+                return (
+                  <ProductItem
+                    src={item.src}
+                    name={item.name}
+                    id={item.id}
+                    color={item.color}
+                    size={item.size}
+                    price={item.price}
+                    number={item.number}
+                    onAdd={onAdd}
+                    onRemoveOne={onRemoveOne}
+                    removeProduct={removeProduct}
+                  />
+                );
+              })}
+            </div>
+            <div className="final-price">
+              <p>Tổng tiền: </p>
+              <p className="price">{formatCash(`${totalPrice}`)}đ</p>
+            </div>
+          </>
+        ) : (
+          <div className="empty-message">
+            Chưa có sản phẩm nào trong giỏ hàng
+          </div>
+        )}
         <div className="btn-container">
           <button className="continue-buy" onClick={onCloseModal}>
             Tiếp tục mua hàng
           </button>
-          <button className="buy">Đặt hàng</button>
+          {cart.length ? <button className="buy">Đặt hàng</button> : null}
         </div>
       </div>
     </div>
