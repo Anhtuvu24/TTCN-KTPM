@@ -34,7 +34,7 @@ function Cart(props) {
     dispatch(removeOneProduct(item));
   };
 
-  const removeProduct = (item) => {
+  const remove = (item) => {
     dispatch(removeProduct(item));
   };
 
@@ -76,7 +76,7 @@ function Cart(props) {
                     number={item.number}
                     onAdd={onAdd}
                     onRemoveOne={onRemoveOne}
-                    removeProduct={removeProduct}
+                    removeProduct={remove}
                   />
                 );
               })}
