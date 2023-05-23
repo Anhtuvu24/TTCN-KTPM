@@ -6,12 +6,18 @@ import { listTypeItem } from "../../const/typeItem";
 import "./index.scss";
 
 function Content(props) {
+  const { onVisibleByFast } = props;
   return (
     <div className="content-container">
       {listTypeItem &&
         listTypeItem.map((item, index) => {
           return (
-            <ListItem title={item.title} list={listItem} type={item.type} />
+            <ListItem
+              onVisibleByFast={onVisibleByFast}
+              title={item.title}
+              list={listItem}
+              type={item.type}
+            />
           );
         })}
     </div>

@@ -6,6 +6,7 @@ export const listItem = [
     name: "name1",
     src: item1,
     price: 100000,
+    color: "Đỏ",
     type: TypeItem.NEW_ITEM,
   },
   {
@@ -13,6 +14,7 @@ export const listItem = [
     name: "name1",
     src: item1,
     price: 100000,
+    color: "Đỏ",
     type: TypeItem.NEW_ITEM,
   },
   {
@@ -20,6 +22,7 @@ export const listItem = [
     name: "name1",
     src: item1,
     price: 100000,
+    color: "Đỏ",
     type: TypeItem.NEW_ITEM,
   },
   {
@@ -27,6 +30,7 @@ export const listItem = [
     name: "name1",
     src: item1,
     price: 100000,
+    color: "Đỏ",
     type: TypeItem.NEW_ITEM,
   },
   {
@@ -34,6 +38,7 @@ export const listItem = [
     name: "name1",
     src: item1,
     price: 100000,
+    color: "Đen",
     type: TypeItem.NEW_ITEM,
   },
   {
@@ -41,6 +46,7 @@ export const listItem = [
     name: "name2",
     src: item1,
     price: 100000,
+    color: "Trắng",
     type: TypeItem.CLB,
   },
   {
@@ -48,6 +54,7 @@ export const listItem = [
     name: "name3",
     src: item1,
     price: 100000,
+    color: "Xanh",
     type: TypeItem.NEW_ITEM,
   },
   {
@@ -55,6 +62,7 @@ export const listItem = [
     name: "name4",
     src: item1,
     price: 100000,
+    color: "Vàng",
     type: TypeItem.NEW_ITEM,
   },
   {
@@ -62,6 +70,7 @@ export const listItem = [
     name: "name6",
     src: item1,
     price: 1000000,
+    color: "Đỏ",
     type: TypeItem.CLB,
   },
   {
@@ -69,6 +78,7 @@ export const listItem = [
     name: "name7",
     src: item1,
     price: 100000,
+    color: "Đen",
     type: TypeItem.CLB,
   },
   {
@@ -76,6 +86,7 @@ export const listItem = [
     name: "name8",
     src: item1,
     price: 100000,
+    color: "Hồng",
     type: TypeItem.KID,
   },
 ];

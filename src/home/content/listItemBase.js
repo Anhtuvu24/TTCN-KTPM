@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import "./index.scss";
 
 function ListItem(props) {
-  const { list, title, type } = props;
+  const { list, title, type, onVisibleByFast } = props;
   const [itemsShow, setItemsShow] = useState(4);
   const newItem = list.filter((item) => item.type === type);
   const dispatch = useDispatch();
@@ -27,6 +27,7 @@ function ListItem(props) {
           if (index < itemsShow) {
             return (
               <ItemProduct
+                onVisibleByFast={onVisibleByFast}
                 onAddProduct={onAddProduct}
                 src={item.src}
                 name={item.name}

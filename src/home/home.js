@@ -8,15 +8,24 @@ import Footer from "./footer/footer";
 import CartContainer from "../cart/cartContainer";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import ByFastItem from "./itemByFast/byFast";
 
 export default function Home(props) {
   const navigate = useNavigate();
   const { userLogin } = props;
   const [visibleModalUser, setVisibleModalUser] = useState(false);
   const [visibleModalCart, setVisibleModalCart] = useState(false);
-  const [numberProduct, setNumberProduct] = useState(0);
+  const [dataModal, setDataModal] = useState(null);
   const onVisible = () => {
     setVisibleModalUser(!visibleModalUser);
+  };
+
+  const onVisibleByFast = (item) => {
+    if (dataModal) {
+      setDataModal(null);
+    } else {
+      setDataModal(item);
+    }
   };
 
   const onVisibleModalCart = () => {
@@ -41,7 +50,16 @@ export default function Home(props) {
       {visibleModalCart && (
         <CartContainer onVisibleModalCart={onVisibleModalCart} />
       )}
-      <Content />
+      <Content onVisibleByFast={onVisibleByFast} />
+      {dataModal ? (
+        <ByFastItem
+          onVisibleByFast={onVisibleByFast}
+          id={dataModal.id}
+          name={dataModal.name}
+          price={dataModal.price}
+          src={dataModal.src}
+        />
+      ) : null}
       <VideoIFrame />
       <Footer />
     </div>

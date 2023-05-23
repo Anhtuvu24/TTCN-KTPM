@@ -16,7 +16,6 @@ function ProductItem(props) {
     onRemoveOne,
     removeProduct,
   } = props;
-  debugger;
   function formatCash(str) {
     return str
       .split("")
@@ -40,11 +39,15 @@ function ProductItem(props) {
   };
 
   const onRemoveOneProduct = () => {
-    const idRemoveOne = id;
-    onRemoveOne(idRemoveOne);
+    const item = {
+      id: id,
+      color: color,
+      size: size,
+    };
+    onRemoveOne(item);
   };
 
-  const onRemoveProduct = (item) => {
+  const onRemoveProduct = () => {
     const idDelete = id;
     removeProduct(idDelete);
   };
@@ -60,7 +63,9 @@ function ProductItem(props) {
               <p>Mã sản phẩm: {id}</p>
               <p>Màu sắc: {color}</p>
               <p>Kích cỡ: {size}</p>
-              <p className="delete">Xóa</p>
+              <p onClick={onRemoveProduct} className="delete">
+                Xóa
+              </p>
             </div>
           </div>
           <div className="price">

@@ -7,21 +7,27 @@ const cartSlice = createSlice({
   },
   reducers: {
     addProduct: (state, action) => {
-      const index = state.currentListCart.findIndex(
-        (item) => item.id === action.payload.id
-      );
-      debugger;
+      const index = state.currentListCart.findIndex((item) => {
+        return (
+          item.id === action.payload.id &&
+          item.color === action.payload.color &&
+          item.size === action.payload.size
+        );
+      });
       if (index >= 0) {
         state.currentListCart[index].number += action.payload.number;
-        debugger;
       } else {
         state.currentListCart.push(action.payload);
       }
     },
     removeOneProduct: (state, action) => {
       const index = state.currentListCart.findIndex(
-        (item) => item.id === action.payload
+        (item) =>
+          item.id === action.payload.id &&
+          item.color === action.payload.color &&
+          item.size === action.payload.size
       );
+      debugger;
       if (index >= 0 && state.currentListCart[index].number > 1) {
         state.currentListCart[index].number -= 1;
       } else {
@@ -35,7 +41,7 @@ const cartSlice = createSlice({
       state.currentListCart.splice(index, 1);
     },
     clearCart: (state, action) => {
-      state.currentListCart = null;
+      state.currentListCart = [];
     },
   },
 });

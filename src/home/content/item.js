@@ -2,7 +2,7 @@ import React from "react";
 import AddCart from "../../iconBase/addCart";
 
 function ItemProduct(props) {
-  const { src, name, price, onAddProduct, id } = props;
+  const { src, name, price, id, onVisibleByFast } = props;
   function formatCash(str) {
     return str
       .split("")
@@ -11,18 +11,14 @@ function ItemProduct(props) {
         return (index % 3 ? next : next + ",") + prev;
       });
   }
-  const onClickCart = (e) => {
-    e.stopPropagation();
+  const onOpenModal = () => {
     const item = {
       id: id,
       name: name,
-      src: src,
-      number: 1,
-      size: 38,
       price: price,
+      src: src,
     };
-    debugger;
-    onAddProduct(item);
+    onVisibleByFast(item);
   };
   return (
     <div className="item-container">
@@ -33,7 +29,7 @@ function ItemProduct(props) {
           <p className="price">{formatCash(`${price}`)}đ</p>
         </div>
         <div className="cart">
-          <AddCart onClick={onClickCart} />
+          <AddCart onClick={onOpenModal} />
         </div>
       </div>
     </div>
