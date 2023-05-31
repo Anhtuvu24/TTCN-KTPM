@@ -18,7 +18,6 @@ function Header(props) {
   const [visibleDropDown, setVisibleDropDown] = useState(false);
   const inputRef = useRef(null);
   const numberItem = cart.reduce((sum, item) => sum + item.number, 0);
-  console.log(numberItem);
   const openModalCart = () => {
     onVisibleModalCart();
   };
@@ -41,7 +40,6 @@ function Header(props) {
   };
 
   const onSearch = () => {
-    console.log(searchValue);
     inputRef.current.value = "";
   };
 
@@ -81,14 +79,22 @@ function Header(props) {
               visibleDropDown ? "menuDropDown" : "none"
             }`}
           >
-            {userLogin && (
-              <div className="profile-user item">
-                <p onClick={onVisible}>Profile</p>
-              </div>
+            {userLogin ? (
+              <>
+                <div className="profile-user item">
+                  <p onClick={onVisible}>Profile</p>
+                </div>
+                {userLogin.permission === "USER" && (
+                  <Link to="/admin" element className="logout-user item">
+                    <p>Admin</p>
+                  </Link>
+                )}
+              </>
+            ) : (
+              <Link to="/login" element className="logout-user item">
+                <p>Login</p>
+              </Link>
             )}
-            <Link to="/login" element className="logout-user item">
-              <p>Login</p>
-            </Link>
           </div>
         </div>
         {userLogin && (

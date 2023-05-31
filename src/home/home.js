@@ -1,7 +1,7 @@
 import Navigation from "./navigation/navigate";
 import HeaderContainer from "./header/headerContainer";
 import Slide from "./slider/slide";
-import AccountAbout from "../account/account";
+import AccountContainer from "../account/accountContainer";
 import Content from "./content/content";
 import VideoIFrame from "./video/videoIframe";
 import Footer from "./footer/footer";
@@ -9,6 +9,8 @@ import CartContainer from "../cart/cartContainer";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import ByFastItem from "./itemByFast/byFast";
+import { clearMessage } from "../features/slice/accountUser";
+import { useDispatch } from "react-redux";
 
 export default function Home(props) {
   const navigate = useNavigate();
@@ -16,6 +18,15 @@ export default function Home(props) {
   const [visibleModalUser, setVisibleModalUser] = useState(false);
   const [visibleModalCart, setVisibleModalCart] = useState(false);
   const [dataModal, setDataModal] = useState(null);
+  const [idProduct, setIdProduct] = useState(null);
+  const dispatch = useDispatch();
+
+  console.log(idProduct);
+
+  const setIdProductDetail = (item) => {
+    setIdProduct(item);
+  };
+
   const onVisible = () => {
     setVisibleModalUser(!visibleModalUser);
   };
@@ -35,22 +46,24 @@ export default function Home(props) {
     // if (!userLogin) {
     //   navigate("/login");
     // }
-  }, [userLogin]);
+    dispatch(clearMessage());
+  }, []);
   return (
     <div>
       <HeaderContainer
         onVisibleModalCart={onVisibleModalCart}
         onVisible={onVisible}
       />
-      <Navigation />
+      <Navigation setIdProduct={setIdProduct} />
       <Slide />
-      {visibleModalUser && (
-        <AccountAbout userLogin={userLogin} onVisible={onVisible} />
-      )}
+      {visibleModalUser && <AccountContainer onVisible={onVisible} />}
       {visibleModalCart && (
         <CartContainer onVisibleModalCart={onVisibleModalCart} />
       )}
-      <Content onVisibleByFast={onVisibleByFast} />
+      <Content
+        setIdProductDetail={setIdProductDetail}
+        onVisibleByFast={onVisibleByFast}
+      />
       {dataModal ? (
         <ByFastItem
           onVisibleByFast={onVisibleByFast}

@@ -3,21 +3,24 @@ import avatarSimple from "../avatarImg/avatarSimple.jpg";
 import InputBase from "../inputBase/input";
 import "./index.scss";
 import TypeError from "../const/messageConst";
+import moment from "moment/moment";
+import { message } from "antd";
 
 function AccountAbout(props) {
-  const { onVisible, userLogin } = props;
+  const { onVisible, userLogin, updateUser, messageAlert } = props;
   const [modalChangePasss, setModalChangPass] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [inputValue, setInputValue] = useState({
     userName: userLogin.username,
     email: userLogin.username,
+    fullName: userLogin.fullName,
     password: "",
     newPassword: "",
     confirmNewPassword: "",
     address: userLogin.address,
     phone: userLogin.phone,
-    date: "",
-    sex: userLogin.sex,
+    date: moment(userLogin.date).format("YYYY-MM-DD"),
+    sex: userLogin.sex === 0 ? "Nam" : "Nữ",
   });
 
   const attributesInput = {
@@ -28,6 +31,14 @@ function AccountAbout(props) {
       name: "userName",
       value: inputValue.userName,
       defaultValue: userLogin.username,
+    },
+    fullName: {
+      type: "text",
+      className: "profile-full-name input-text",
+      placeholder: "Full name",
+      name: "fullName",
+      value: inputValue.fullName,
+      defaultValue: userLogin.fullName,
     },
     email: {
       type: "text",
@@ -88,6 +99,14 @@ function AccountAbout(props) {
       defaultValue: "",
     },
   };
+  const [messageApiDevelop, contextHolder] = message.useMessage();
+  const alert = () => {
+    if (messageAlert.type === "error")
+      messageApiDevelop.error(messageAlert.messageAlert);
+    else if (messageAlert.type === "success") {
+      messageApiDevelop.success(messageAlert.messageAlert);
+    }
+  };
   const handleClick = (e) => {
     e.stopPropagation();
   };
@@ -100,32 +119,49 @@ function AccountAbout(props) {
   };
 
   const checkInput = () => {
-    if (inputValue.password === "" || inputValue.newPassword === "" || inputValue.confirmNewPassword === "") {
+    if (
+      inputValue.password === "" ||
+      inputValue.newPassword === "" ||
+      inputValue.confirmNewPassword === ""
+    ) {
       setErrorMessage(TypeError.EMPTY_MESSAGE);
     } else if (inputValue.password !== userLogin.password) {
-      setErrorMessage(TypeError.INCORRECT_PASSWORD)
+      setErrorMessage(TypeError.INCORRECT_PASSWORD);
     } else if (inputValue.newPassword !== inputValue.confirmNewPassword) {
-      setErrorMessage(TypeError.INCORRECT_CONFIRM_PASSWORD)
+      setErrorMessage(TypeError.INCORRECT_CONFIRM_PASSWORD);
     } else {
       setErrorMessage("");
     }
-  }
+  };
 
   const onClick = () => {
     console.log(inputValue);
     setTimeout(() => {
       checkInput();
-    }, 300)
-  }
+    }, 300);
+  };
 
   const onKeyPress = (e) => {
-    if(e.which === 13) {
+    if (e.which === 13) {
       onClick();
     }
-  }
+  };
 
   const changeModal = () => {
     setModalChangPass(!modalChangePasss);
+  };
+
+  const onUpdateInfor = () => {
+    const data = {
+      id: userLogin.id,
+      updateInforData: {
+        ...inputValue,
+        permission: userLogin.permission,
+        password: userLogin.password,
+      },
+    };
+    updateUser(data);
+    alert();
   };
 
   return (
@@ -169,8 +205,9 @@ function AccountAbout(props) {
                 />{" "}
                 Nữ
               </div>
+              {contextHolder}
               <div className="button-container">
-                <button>Cập nhật</button>
+                <button onClick={onUpdateInfor}>Cập nhật</button>
                 <button onClick={changeModal}>Đổi mật khẩu</button>
               </div>
             </div>
@@ -184,12 +221,13 @@ function AccountAbout(props) {
                   attributes={attributesPass[key]}
                   onChange={onChange}
                   onKeyDown={onKeyPress}
-
                 />
               );
             })}
             {errorMessage && <p className="error-message">{errorMessage}</p>}
-            <p className="back-profile" onClick={changeModal}>Trở về trang thông tin</p>
+            <p className="back-profile" onClick={changeModal}>
+              Trở về trang thông tin
+            </p>
             <button onClick={onClick}>Cập nhật</button>
           </div>
         )}

@@ -27,7 +27,6 @@ const cartSlice = createSlice({
           item.color === action.payload.color &&
           item.size === action.payload.size
       );
-      debugger;
       if (index >= 0 && state.currentListCart[index].number > 1) {
         state.currentListCart[index].number -= 1;
       } else {

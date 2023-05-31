@@ -4,6 +4,9 @@ import rootSaga from "./rootSaga";
 import reducerAccount from "../features/slice/listAccountSlice";
 import reducerUser from "../features/slice/accountUser";
 import reducerCart from "../features/slice/cart";
+import reducerDanhMuc from "../features/slice/danhMuc";
+import reducerTheLoai from "../features/slice/theLoai";
+
 import {
   persistStore,
   persistReducer,
@@ -27,6 +30,8 @@ const reducer = combineReducers({
   listAccount: reducerAccount,
   user: reducerUser,
   cart: reducerCart,
+  danhMuc: reducerDanhMuc,
+  theLoai: reducerTheLoai,
 });
 const persistedReducer = persistReducer(persistConfig, reducer);
 

@@ -2,7 +2,7 @@ import "./index.scss";
 
 function InputBase(props) {
   // debugger;
-  const { attributes, onChange,  onKeyDown } = props;
+  const { attributes, onChange, onKeyDown } = props;
   return (
     <div className="input-container">
       <label>{`${attributes.placeholder}: `}</label>
@@ -11,7 +11,7 @@ function InputBase(props) {
         className={attributes.className}
         placeholder={attributes.placeholder}
         name={attributes.name}
-        // value={attributes.value ? attributes.value : attributes.defaultValue}
+        value={attributes.value}
         onChange={onChange}
         defaultValue={attributes.defaultValue}
         onKeyDown={onKeyDown}

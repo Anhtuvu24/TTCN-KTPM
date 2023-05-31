@@ -6,7 +6,7 @@ import { listTypeItem } from "../../const/typeItem";
 import "./index.scss";
 
 function Content(props) {
-  const { onVisibleByFast } = props;
+  const { onVisibleByFast, setIdProductDetail } = props;
   return (
     <div className="content-container">
       {listTypeItem &&
@@ -14,6 +14,7 @@ function Content(props) {
           return (
             <ListItem
               onVisibleByFast={onVisibleByFast}
+              setIdProductDetail={setIdProductDetail}
               title={item.title}
               list={listItem}
               type={item.type}
