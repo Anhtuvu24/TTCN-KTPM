@@ -87,7 +87,6 @@ function Login(props) {
   };
 
   const onKeyPress = (e) => {
-    console.log("check");
     if (e.which === 13) {
       onClick();
     }

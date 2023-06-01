@@ -128,7 +128,6 @@ function Register(props) {
   }, [messageStatus, userLogin]);
 
   const onClick = () => {
-    console.log(inputValue);
     const strongRegex = /^(?=.*[0-9])(?=.*[A-Z])[a-zA-Z0-9]{7,20}$/;
     const userNameRegex = /^[a-z]{5,15}$/;
     const phoneRegex = /^\d{9,11}$/;

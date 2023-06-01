@@ -5,7 +5,6 @@ import Home from "./home";
 
 const mapStateToProps = (state, ownProps) => {
   const userLogin = state.user.currentUser;
-  //   debugger;
   return {
     userLogin,
   };

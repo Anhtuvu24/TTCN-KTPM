@@ -1,6 +1,6 @@
 .don-hang-table-container {
   display: grid;
-  grid-template-columns: 110px 110px 110px 600px 110px 150px;
+  grid-template-columns: 110px 110px 110px 600px 160px 120px 120px;
   .title {
     display: inline-block;
     text-align: center;
@@ -32,7 +32,7 @@
       }
       .item-container {
         display: grid;
-        grid-template-columns: 110px 110px 110px 600px 110px 150px;
+        grid-template-columns: 110px 110px 110px 600px 160px 120px 120px;
         p {
           display: flex;
           text-align: center;

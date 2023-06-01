@@ -14,7 +14,6 @@ const theLoai = createSlice({
       };
     },
     updateTheLoai: (state, action) => {
-      debugger;
       return {
         currentTheLoaiMessage: {
           messageAlert: "Cập nhật thành công",
@@ -52,7 +51,6 @@ const theLoai = createSlice({
       };
     },
     addTheLoai: (state, action) => {
-      debugger;
       if (action.payload.data.success) {
         const item = {
           id: action.payload.data.result.id,

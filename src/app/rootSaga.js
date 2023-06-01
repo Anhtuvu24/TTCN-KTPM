@@ -21,6 +21,20 @@ import {
   sgWatchDeleteTL,
   sgWatchUpdateTL,
 } from "../features/saga/sagaTheLoai/watcher/watcher";
+
+import {
+  sgWatchGetListPD,
+  sgWatchAddPD,
+  sgWatchUpdatePD,
+  sgWatchDeletePD,
+} from "../features/saga/sagaProduct/watcher/watcher";
+
+import {
+  sgWatchAddDH,
+  sgWatchGetListDH,
+  sgWatchDeleteDH,
+  sgWatchUpdateDH,
+} from "../features/saga/sagaDonHang/watcher/watcher";
 export default function* rootSaga() {
   yield all([
     // saga user
@@ -42,5 +56,17 @@ export default function* rootSaga() {
     sgWatchAddTL(),
     sgWatchDeleteTL(),
     sgWatchUpdateTL(),
+
+    // sg SanPham
+    sgWatchGetListPD(),
+    sgWatchAddPD(),
+    sgWatchUpdatePD(),
+    sgWatchDeletePD(),
+
+    //dh
+    sgWatchAddDH(),
+    sgWatchGetListDH(),
+    sgWatchDeleteDH(),
+    sgWatchUpdateDH(),
   ]);
 }

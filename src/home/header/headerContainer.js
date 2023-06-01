@@ -7,7 +7,6 @@ const mapStateToProps = (state, ownProps) => {
   const userLogin = state.user.currentUser;
   const cart = state.cart.currentListCart;
   const onVisible = ownProps.onVisible;
-  // debugger;
   return {
     userLogin,
     onVisible,

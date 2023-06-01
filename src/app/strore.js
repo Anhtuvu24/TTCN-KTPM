@@ -6,7 +6,8 @@ import reducerUser from "../features/slice/accountUser";
 import reducerCart from "../features/slice/cart";
 import reducerDanhMuc from "../features/slice/danhMuc";
 import reducerTheLoai from "../features/slice/theLoai";
-
+import reducerProduct from "../features/slice/product";
+import reducerDonHang from "../features/slice/donHang";
 import {
   persistStore,
   persistReducer,
@@ -32,6 +33,8 @@ const reducer = combineReducers({
   cart: reducerCart,
   danhMuc: reducerDanhMuc,
   theLoai: reducerTheLoai,
+  product: reducerProduct,
+  donHang: reducerDonHang,
 });
 const persistedReducer = persistReducer(persistConfig, reducer);
 

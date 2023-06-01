@@ -13,7 +13,6 @@ import {
 import { instance } from "../../../../axios/axios";
 import {
   clearDanhMucMessage,
-  updateDanhMuc,
   getListDanhMuc,
   deleteDanhMuc,
   addDanhMuc,

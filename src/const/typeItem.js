@@ -8,19 +8,19 @@ const TypeItem = {
 export const listTypeItem = [
   {
     type: TypeItem.NEW_ITEM,
-    title: "Sản phẩm mới",
+    title: "Tất cả sản phẩm",
   },
   {
     type: TypeItem.CLB,
-    title: "Áo CLB",
+    title: "Ao CLB",
   },
   {
     type: TypeItem.KID,
-    title: "Áo cho trẻ em",
+    title: "Ao cho tre em",
   },
   {
     type: TypeItem.FREESTYLE,
-    title: "Áo tự thiết kế",
+    title: "Ao khong logo",
   },
 ];
 

@@ -11,7 +11,8 @@ const cartSlice = createSlice({
         return (
           item.id === action.payload.id &&
           item.color === action.payload.color &&
-          item.size === action.payload.size
+          item.size === action.payload.size &&
+          item.tenAnh === action.payload.tenAnh
         );
       });
       if (index >= 0) {

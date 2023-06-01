@@ -100,7 +100,11 @@ function TheLoai(props) {
                 onChange={handleChangeComboBox}
               >
                 {listDM.map((item) => {
-                  return <option value={item.id}>{item.id}</option>;
+                  return (
+                    <option
+                      value={item.id}
+                    >{`${item.id} - ${item.tenDanhMuc}`}</option>
+                  );
                 })}
               </select>
             </div>

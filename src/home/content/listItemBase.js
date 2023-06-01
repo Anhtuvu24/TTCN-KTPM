@@ -3,13 +3,15 @@ import AddCart from "../../iconBase/addCart";
 import ItemProduct from "./item";
 import { addProduct } from "../../features/slice/cart";
 import { useDispatch } from "react-redux";
+import item1 from "../../itemImg/item1.jpg";
 
 import "./index.scss";
 
 function ListItem(props) {
-  const { list, title, type, onVisibleByFast, setIdProductDetail } = props;
+  const { list, title, type, onVisibleByFast, setIdProductDetail, idDanhMuc } =
+    props;
   const [itemsShow, setItemsShow] = useState(4);
-  const newItem = list.filter((item) => item.type === type);
+  const newItem = list.filter((item) => item.maTheLoai === idDanhMuc);
   const dispatch = useDispatch();
   const showMore = () => {
     setItemsShow(itemsShow + 4);
@@ -30,16 +32,19 @@ function ListItem(props) {
                 setIdProductDetail={setIdProductDetail}
                 onVisibleByFast={onVisibleByFast}
                 onAddProduct={onAddProduct}
-                src={item.src}
-                name={item.name}
-                id={item.ID}
-                price={item.price}
+                src={item1}
+                name={item.tenSanPham}
+                id={item.id}
+                price={item.giaBan}
+                color={item.mauSac}
+                size={item.kichCo}
+                tenAnh={item.tenAnh}
               />
             );
           }
         })}
       </div>
-      {newItem.length >= itemsShow && (
+      {newItem.length > itemsShow && (
         <button onClick={showMore} className="show-more">
           Xem thêm
         </button>

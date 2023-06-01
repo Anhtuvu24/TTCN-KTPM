@@ -10,10 +10,10 @@ import { Link } from "react-router-dom";
 import { logoutSucess } from "../../features/slice/accountUser";
 import { clearCart } from "../../features/slice/cart";
 import { useDispatch } from "react-redux";
+import img from "../../avatarImg/349678739_169908899103102_4039015863226314269_n.png";
 function Header(props) {
   const { userLogin, onVisible, onVisibleModalCart, cart } = props;
   const dispatch = useDispatch();
-  // debugger;
   const [searchValue, setSearchValue] = useState("");
   const [visibleDropDown, setVisibleDropDown] = useState(false);
   const inputRef = useRef(null);
@@ -46,7 +46,7 @@ function Header(props) {
   return (
     <div className="header">
       <div className="header-logo">
-        <img src="https://theme.hstatic.net/1000313927/1001030277/14/logo.png?v=13" />
+        <img src={img} />
         <div className="banner">
           {/* <h1 className="nameStore">SESPORT</h1> */}
           {/* <p>NUMBER ONE FOR FOOTBALL SHIRTS</p> */}
@@ -84,7 +84,7 @@ function Header(props) {
                 <div className="profile-user item">
                   <p onClick={onVisible}>Profile</p>
                 </div>
-                {userLogin.permission === "USER" && (
+                {userLogin.permission === "ADMIN" && (
                   <Link to="/admin" element className="logout-user item">
                     <p>Admin</p>
                   </Link>

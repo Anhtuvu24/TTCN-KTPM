@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Remove from "../iconBase/remove";
 import Add from "../iconBase/add";
 
@@ -11,11 +11,31 @@ function ProductItem(props) {
     color,
     size,
     price,
+    tenAnh,
     number,
     onAdd,
     onRemoveOne,
     removeProduct,
   } = props;
+  const [imageUrl, setImageUrl] = useState("");
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8088/api/files/${tenAnh}`
+        );
+        if (response.ok) {
+          const imageBlob = await response.blob();
+          const imageUrl = URL.createObjectURL(imageBlob);
+          setImageUrl(imageUrl);
+        }
+      } catch (error) {
+        console.error("Error fetching image:", error);
+      }
+    };
+
+    fetchImage();
+  }, []);
   function formatCash(str) {
     return str
       .split("")
@@ -34,6 +54,7 @@ function ProductItem(props) {
       number: 1,
       size: size,
       price: price,
+      tenAnh: tenAnh,
     };
     onAdd(item);
   };
@@ -57,7 +78,7 @@ function ProductItem(props) {
       {number ? (
         <div className="item">
           <div className="review">
-            <img src={src} />
+            <img src={imageUrl} />
             <div className="infor">
               <h2>{name}</h2>
               <p>Mã sản phẩm: {id}</p>

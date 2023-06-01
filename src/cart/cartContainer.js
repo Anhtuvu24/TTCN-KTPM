@@ -6,10 +6,11 @@ import Cart from "./cart";
 const mapStateToProps = (state, ownProps) => {
   const userLogin = state.user.currentUser;
   const cart = state.cart.currentListCart;
-  //   debugger;
+  const messageDHStatus = state.donHang.currentDonHangMessage;
   return {
     userLogin,
     cart,
+    messageDHStatus,
   };
 };
 
