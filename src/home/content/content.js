@@ -1,22 +1,33 @@
 import React, { useState, useEffect } from "react";
 import AddCart from "../../iconBase/addCart";
 import ListItem from "./listItemBase";
-import { listItem } from "../../listItem";
-import { listTypeItem } from "../../const/typeItem";
 import "./index.scss";
 
 function Content(props) {
-  const { onVisibleByFast, setIdProductDetail } = props;
+  const {
+    onVisibleByFast,
+    setIdProductDetail,
+    listProduct,
+    getListPD,
+    listDM,
+    messageStatus,
+    getListDM,
+  } = props;
+  useEffect(() => {
+    getListPD();
+    getListDM();
+  }, [messageStatus]);
   return (
     <div className="content-container">
-      {listTypeItem &&
-        listTypeItem.map((item, index) => {
+      {listDM &&
+        listDM.map((item, index) => {
           return (
             <ListItem
               onVisibleByFast={onVisibleByFast}
               setIdProductDetail={setIdProductDetail}
-              title={item.title}
-              list={listItem}
+              title={item.tenDanhMuc}
+              idDanhMuc={item.id}
+              list={listProduct}
               type={item.type}
             />
           );

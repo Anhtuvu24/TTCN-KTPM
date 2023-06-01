@@ -7,17 +7,26 @@ import { useDispatch } from "react-redux";
 import "./index.scss";
 import LeftArrow from "../iconBase/leftArrow";
 import ItemMenu from "./itemMenuBase/itemBase";
-import ProductTable from "./tables/productTable/productTable";
+import ProductTableContainer from "./tables/productTable/productTable";
 import DanhMucTable from "./tables/danhMucTable/danhMucTable";
 import TheLoaiTable from "./tables/theLoaiTable/theLoaiTable";
 import UserTableContainer from "./tables/userTable/userTable";
-import DonHangTable from "./tables/donHangTable/donHangTable";
+import DonHangTableContainer from "./tables/donHangTable/donHangTable";
 
 import { clearMessage } from "../features/slice/accountUser";
 import { clearDanhMucMessage } from "../features/slice/danhMuc";
 import { clearTheLoaiMessage } from "../features/slice/theLoai";
+import { clearProductMessage } from "../features/slice/product";
+import { clearDonHangMessage } from "../features/slice/donHang";
 function AdminPage(props) {
-  const { messageStatus, messageDMStatus, listDM, messageTLStatus } = props;
+  const {
+    messageStatus,
+    messageDMStatus,
+    listDM,
+    messageTLStatus,
+    messagePDStatus,
+    messageDHStatus,
+  } = props;
   const navigate = useNavigate();
   const [itemSelect, setItemSelect] = useState("sanPham");
   const [titleTable, setTitleTable] = useState("Sản phẩm");
@@ -25,37 +34,27 @@ function AdminPage(props) {
   const menuItems = [
     {
       type: "sanPham",
-      lastUpdate: moment(listDM[listDM.length - 1].modifiedDate).format(
-        "DD/MM/YYYY"
-      ),
+
       name: "Sản phẩm",
     },
     {
       type: "danhMuc",
-      lastUpdate: moment(listDM[listDM.length - 1].modifiedDate).format(
-        "DD/MM/YYYY"
-      ),
+
       name: "Danh mục",
     },
     {
       type: "theLoai",
-      lastUpdate: moment(listDM[listDM.length - 1].modifiedDate).format(
-        "DD/MM/YYYY"
-      ),
+
       name: "Thể loại",
     },
     {
       type: "nguoiDung",
-      lastUpdate: moment(listDM[listDM.length - 1].modifiedDate).format(
-        "DD/MM/YYYY"
-      ),
+
       name: "Người dùng",
     },
     {
       type: "donHang",
-      lastUpdate: moment(listDM[listDM.length - 1].modifiedDate).format(
-        "DD/MM/YYYY"
-      ),
+
       name: "Đơn hàng",
     },
   ];
@@ -69,7 +68,7 @@ function AdminPage(props) {
   };
   const renderTable = () => {
     if (itemSelect === "sanPham") {
-      return <ProductTable />;
+      return <ProductTableContainer />;
     } else if (itemSelect === "danhMuc") {
       return <DanhMucTable />;
     } else if (itemSelect === "theLoai") {
@@ -77,7 +76,7 @@ function AdminPage(props) {
     } else if (itemSelect === "nguoiDung") {
       return <UserTableContainer />;
     } else {
-      return <DonHangTable />;
+      return <DonHangTableContainer />;
     }
   };
   const [messageApiDevelop, contextHolder] = message.useMessage();
@@ -95,13 +94,26 @@ function AdminPage(props) {
       alertMessage(messageDMStatus);
     } else if (messageTLStatus) {
       alertMessage(messageTLStatus);
+    } else if (messagePDStatus) {
+      alertMessage(messagePDStatus);
+    } else if (messageDHStatus) {
+      alertMessage(messageDHStatus);
     }
     setTimeout(() => {
       dispatch(clearMessage());
       dispatch(clearDanhMucMessage());
       dispatch(clearTheLoaiMessage());
+      dispatch(clearProductMessage());
+      dispatch(clearDanhMucMessage());
+      dispatch(clearDonHangMessage());
     }, 1000);
-  }, [messageStatus, messageDMStatus, messageTLStatus]);
+  }, [
+    messageStatus,
+    messageDMStatus,
+    messageTLStatus,
+    messagePDStatus,
+    messageDHStatus,
+  ]);
   return (
     <div className="admin-container">
       {contextHolder}
@@ -120,7 +132,6 @@ function AdminPage(props) {
                 itemSelect={itemSelect}
                 name={item.name}
                 onSelectItem={onSelectItem}
-                lastUpdate={item.lastUpdate}
               />
             );
           })}

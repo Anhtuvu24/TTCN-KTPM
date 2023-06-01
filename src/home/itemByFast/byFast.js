@@ -1,21 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { addProduct } from "../../features/slice/cart";
 import { useDispatch } from "react-redux";
 import "./index.scss";
-import { Carousel } from "antd";
-import banner1 from "../../banner1/bann1.3.jpg";
-import banner2 from "../../banner1/banner1.1.png";
-import banner3 from "../../banner1/banner1.2.jpg";
 import CloseIcon from "../../iconBase/close";
 
 function ByFastItem(props) {
-  const { onVisibleByFast, id, name, price, src } = props;
-  const arrImg = [banner1, banner2, banner3];
-  const color = ["Đỏ", "Trắng", "Xanh", "Đen"];
-  const size = ["S", "L", "XL", "XXL"];
-  const [selectColor, setSelectColor] = useState("Đỏ");
-  const [selectSize, setSelectSize] = useState("S");
+  const { onVisibleByFast, id, name, price, src, color, size, tenAnh } = props;
+  const colors = color.split(", ");
+  const sizes = size.split(", ");
+  const [selectColor, setSelectColor] = useState(colors[0]);
+  const [selectSize, setSelectSize] = useState(sizes[0]);
+  const [imageUrl, setImageUrl] = useState("");
   const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8088/api/files/${tenAnh}`
+        );
+        if (response.ok) {
+          const imageBlob = await response.blob();
+          const imageUrl = URL.createObjectURL(imageBlob);
+          setImageUrl(imageUrl);
+        }
+      } catch (error) {
+        console.error("Error fetching image:", error);
+      }
+    };
+
+    fetchImage();
+  }, []);
   const onSelectColor = (value) => {
     setSelectColor(value);
   };
@@ -45,6 +59,7 @@ function ByFastItem(props) {
       color: selectColor,
       size: selectSize,
       price: price,
+      tenAnh: tenAnh,
     };
     dispatch(addProduct(item));
     onClose();
@@ -53,22 +68,12 @@ function ByFastItem(props) {
     <div onClick={onClose} className="modal-by-fast">
       <div onClick={onClick} className="container">
         <div className="slide-img">
-          <Carousel autoplay dotPosition={"bottom"}>
-            {arrImg.map((item, index) => {
+          <div style={{ width: "100%", height: "210px" }}>
+            {
               // eslint-disable-next-line jsx-a11y/alt-text
-              return (
-                <div style={{ width: "100%", height: "210px" }}>
-                  {
-                    // eslint-disable-next-line jsx-a11y/alt-text
-                    <img
-                      src={item}
-                      style={{ width: "354px", height: "210px" }}
-                    />
-                  }
-                </div>
-              );
-            })}
-          </Carousel>
+              <img src={imageUrl} style={{ width: "354px", height: "210px" }} />
+            }
+          </div>
         </div>
         <div className="infor-order">
           <h1>{name}</h1>
@@ -76,7 +81,7 @@ function ByFastItem(props) {
           <p>{formatCash(`${price}đ`)}</p>
           <h4>Màu sắc</h4>
           <div className="colors">
-            {color.map((item) => {
+            {colors.map((item) => {
               return (
                 <div
                   onClick={() => onSelectColor(item)}
@@ -91,7 +96,7 @@ function ByFastItem(props) {
           </div>
           <h4>Kích thước</h4>
           <div className="sizes">
-            {size.map((item) => {
+            {sizes.map((item) => {
               return (
                 <div
                   onClick={() => onSelectSize(item)}

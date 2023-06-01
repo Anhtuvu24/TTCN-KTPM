@@ -5,17 +5,16 @@ import "./index.scss";
 function VideoIFrame(props) {
   return (
     <div className="container-iframe">
-      <h1>Title</h1>
-      <h2>Name</h2>
+      <h1>#MẸO PHÂN BIỆT ÁO BÓNG ĐÁ AUTHENTIC VÀ REPLICA - SAO CHO ĐÚNG</h1>
       <div className="video-container">
         <iframe
           width="1140"
           height="640"
-          src="https://www.youtube.com/embed/Fae0axImNn0"
+          src="https://www.youtube.com/embed/7g_CJm8pKl8"
           title="YouTube video player"
-          frameBorder="0"
+          frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
+          allowfullscreen
         ></iframe>
       </div>
     </div>

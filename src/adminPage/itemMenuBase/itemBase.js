@@ -12,7 +12,7 @@ function ItemMenu(props) {
       className={`item ${itemSelect === type ? "select" : ""}`}
     >
       <h3>{name}</h3>
-      <p>Lần cuối chỉnh sửa {lastUpdate}</p>
+      {/* <p>Lần cuối chỉnh sửa</p> */}
     </div>
   );
 }

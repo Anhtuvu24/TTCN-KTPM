@@ -6,6 +6,8 @@ const mapStateToProps = (state, ownProps) => {
   const messageStatus = state.user.currentMessage;
   const messageDMStatus = state.danhMuc.currentDanhMucMessage;
   const messageTLStatus = state.theLoai.currentTheLoaiMessage;
+  const messagePDStatus = state.product.currentProductMessage;
+  const messageDHStatus = state.donHang.currentDonHangMessage;
   const listDM = state.danhMuc.listDanhMuc;
   // const currentDate = new Date();
   // const closest = listDM.reduce((closest, user) => {
@@ -25,6 +27,8 @@ const mapStateToProps = (state, ownProps) => {
     messageStatus,
     messageDMStatus,
     messageTLStatus,
+    messagePDStatus,
+    messageDHStatus,
     listDM,
   };
 };

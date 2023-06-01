@@ -101,10 +101,12 @@ function AccountAbout(props) {
   };
   const [messageApiDevelop, contextHolder] = message.useMessage();
   const alert = () => {
-    if (messageAlert.type === "error")
-      messageApiDevelop.error(messageAlert.messageAlert);
-    else if (messageAlert.type === "success") {
-      messageApiDevelop.success(messageAlert.messageAlert);
+    if (messageAlert) {
+      if (messageAlert.type === "error")
+        messageApiDevelop.error(messageAlert.messageAlert);
+      else if (messageAlert.type === "success") {
+        messageApiDevelop.success(messageAlert.messageAlert);
+      }
     }
   };
   const handleClick = (e) => {
@@ -135,7 +137,6 @@ function AccountAbout(props) {
   };
 
   const onClick = () => {
-    console.log(inputValue);
     setTimeout(() => {
       checkInput();
     }, 300);

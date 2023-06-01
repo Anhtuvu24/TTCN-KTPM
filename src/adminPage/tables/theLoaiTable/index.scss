@@ -1,6 +1,6 @@
 .the-loai-table-container {
   display: grid;
-  grid-template-columns: 450px 450px 450px;
+  grid-template-columns: 440px 440px 440px;
   .model {
     position: fixed;
     top: 0;
@@ -149,7 +149,7 @@
       }
       .item-container {
         display: grid;
-        grid-template-columns: 450px 450px 450px;
+        grid-template-columns: 440px 440px 440px;
         p {
           display: flex;
           text-align: center;

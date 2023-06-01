@@ -12,7 +12,6 @@ export const deleteTL = (data) => {
 };
 
 export const addTL = (data) => {
-  debugger;
   return {
     type: "ADD_TL",
     payload: data,

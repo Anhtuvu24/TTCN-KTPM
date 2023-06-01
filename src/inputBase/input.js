@@ -1,7 +1,6 @@
 import "./index.scss";
 
 function InputBase(props) {
-  // debugger;
   const { attributes, onChange, onKeyDown } = props;
   return (
     <div className="input-container">

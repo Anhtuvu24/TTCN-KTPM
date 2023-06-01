@@ -1,80 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DownOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-
+import { connect } from "react-redux";
 // Style
 import "./index.scss";
+import { getListTL } from "../../features/saga/sagaTheLoai/typeTheLoaiSaga";
+import { getListDM } from "../../features/saga/sagaDanhMuc/typeDanhMucSaga";
 
 function Navigation(props) {
-  const { setIdProduct } = props;
+  const { setIdProduct, listDM, listTL, getListDM, getListTL } = props;
   const navigate = useNavigate();
+  const content = listDM.map((item, index) => ({
+    [`${item.id}`]: {
+      text: item.tenDanhMuc,
+      firstChild: listTL.filter(
+        (itemChild, index) => itemChild.maDanhMuc === item.id
+      ),
+    },
+  }));
   const items = {
     home: {
       text: "Trang chủ",
     },
-    nationalJersey: {
-      text: "Áo đội tuyển quốc gia",
-      firstChild: [
-        {
-          id: 1,
-          text: "Việt Nam",
-        },
-        {
-          id: 2,
-          text: "Hàn Quốc",
-        },
-        {
-          id: 3,
-          text: "Trung Quốc",
-        },
-        {
-          id: 4,
-          text: "Nhật Bản",
-        },
-        {
-          id: 5,
-          text: "Quatar",
-        },
-      ],
-    },
-    clubJersey: {
-      text: "Áo CLB",
-      firstChild: [
-        {
-          id: 1,
-          text: "Manchester City",
-        },
-        {
-          id: 2,
-          text: "Liverpool",
-        },
-        {
-          id: 3,
-          text: "Chelsea",
-        },
-        {
-          id: 4,
-          text: "Real Madrid",
-        },
-        {
-          id: 5,
-          text: "Bayern Munich",
-        },
-      ],
-    },
-    noneLogoJersey: {
-      text: "Áo không logo",
-    },
-    jacket: {
-      text: "Áo khoác",
-    },
-    longArmShirt: {
-      text: "Áo dài tay",
-    },
-    childJersey: {
-      text: "Áo trẻ em",
-    },
+    ...content.reduce((result, item) => ({ ...result, ...item }), {}),
   };
+
+  useEffect(() => {
+    getListDM();
+    getListTL();
+  }, []);
 
   const onClick = (typeItemNav) => {
     switch (typeItemNav) {
@@ -83,7 +37,6 @@ function Navigation(props) {
         setIdProduct(null);
         break;
       default:
-        console.log("Test");
         break;
     }
   };
@@ -108,7 +61,7 @@ function Navigation(props) {
                 {items[key].firstChild.map((keyChild) => {
                   return (
                     <div key={keyChild.id} className="nav-child-item">
-                      <p className="item">{keyChild.text}</p>
+                      <p className="item">{keyChild.tenTheLoai}</p>
                     </div>
                   );
                 })}
@@ -121,4 +74,20 @@ function Navigation(props) {
   );
 }
 
-export default Navigation;
+const mapStateToProps = (state, ownProps) => {
+  const listDM = state.danhMuc.listDanhMuc;
+  const listTL = state.theLoai.listTheLoai;
+  return { listDM, listTL };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  getListTL: () => dispatch(getListTL()),
+  getListDM: () => dispatch(getListDM()),
+});
+
+const NavigateContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Navigation);
+
+export default NavigateContainer;

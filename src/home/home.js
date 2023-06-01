@@ -1,8 +1,9 @@
-import Navigation from "./navigation/navigate";
+import NavigateContainer from "./navigation/navigate";
 import HeaderContainer from "./header/headerContainer";
 import Slide from "./slider/slide";
 import AccountContainer from "../account/accountContainer";
 import Content from "./content/content";
+import ContentContainer from "./content/contentContainer";
 import VideoIFrame from "./video/videoIframe";
 import Footer from "./footer/footer";
 import CartContainer from "../cart/cartContainer";
@@ -20,8 +21,6 @@ export default function Home(props) {
   const [dataModal, setDataModal] = useState(null);
   const [idProduct, setIdProduct] = useState(null);
   const dispatch = useDispatch();
-
-  console.log(idProduct);
 
   const setIdProductDetail = (item) => {
     setIdProduct(item);
@@ -54,13 +53,13 @@ export default function Home(props) {
         onVisibleModalCart={onVisibleModalCart}
         onVisible={onVisible}
       />
-      <Navigation setIdProduct={setIdProduct} />
+      <NavigateContainer setIdProduct={setIdProduct} />
       <Slide />
       {visibleModalUser && <AccountContainer onVisible={onVisible} />}
       {visibleModalCart && (
         <CartContainer onVisibleModalCart={onVisibleModalCart} />
       )}
-      <Content
+      <ContentContainer
         setIdProductDetail={setIdProductDetail}
         onVisibleByFast={onVisibleByFast}
       />
@@ -71,6 +70,9 @@ export default function Home(props) {
           name={dataModal.name}
           price={dataModal.price}
           src={dataModal.src}
+          color={dataModal.color}
+          size={dataModal.size}
+          tenAnh={dataModal.tenAnh}
         />
       ) : null}
       <VideoIFrame />

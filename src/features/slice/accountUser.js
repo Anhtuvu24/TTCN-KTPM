@@ -87,7 +87,6 @@ const userSlice = createSlice({
       };
     },
     registerSuccess: (state, action) => {
-      debugger;
       const {
         id,
         hoTen,
@@ -119,7 +118,6 @@ const userSlice = createSlice({
       };
     },
     registerFailure: (state, action) => {
-      debugger;
       const message = action.payload.data.result;
       return {
         ...state,
