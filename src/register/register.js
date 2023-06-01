@@ -1,9 +1,13 @@
 // Component
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { message } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import InputBase from "../inputBase/input";
+import { register } from "../features/saga/sagaAccount/typeAccountSaga";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 // Icon
 import FaceIconComponent from "../iconBase/faceIcon";
@@ -16,17 +20,23 @@ import TypeError from "../const/messageConst";
 // Styles
 import "./index.scss";
 
-export default function Login() {
+function Register(props) {
+  const { register, messageStatus, userLogin } = props;
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState({
     userName: "",
-    email: "",
+    fullName: "",
     password: "",
     confirmPassword: "",
     address: "",
     phone: "",
+    date: "",
+    sex: "",
   });
+  const [messageApiDevelop, contextHolder] = message.useMessage();
 
   const attributesInput = {
     userName: {
@@ -36,12 +46,12 @@ export default function Login() {
       name: "userName",
       value: inputValue.userName,
     },
-    email: {
+    fullName: {
       type: "text",
       className: "register-email input-text",
-      placeholder: "Email",
-      name: "email",
-      value: inputValue.email,
+      placeholder: "Full name",
+      name: "fullName",
+      value: inputValue.fullName,
     },
     phone: {
       type: "text",
@@ -56,6 +66,13 @@ export default function Login() {
       placeholder: "Address",
       name: "address",
       value: inputValue.address,
+    },
+    date: {
+      type: "date",
+      className: "profile-date input-text",
+      placeholder: "Date",
+      name: "date",
+      value: inputValue.date,
     },
     password: {
       type: showPassword ? "text" : "password",
@@ -89,25 +106,63 @@ export default function Login() {
     setConfirmShowPassword(!showConfirmPassword);
   };
 
-  const [messageApiDevelop, contextHolder] = message.useMessage();
   const alertDevelop = () => {
     messageApiDevelop.info("Chức năng đang phát triển!");
   };
 
+  const alertMessage = (messageStatus) => {
+    if (messageStatus.type === "error")
+      messageApiDevelop.error(messageStatus.messageAlert);
+    else if (messageStatus.type === "success") {
+      messageApiDevelop.success(messageStatus.messageAlert);
+    }
+  };
+
+  useEffect(() => {
+    if (messageStatus) {
+      alertMessage(messageStatus);
+    }
+    if (userLogin) {
+      navigate("/");
+    }
+  }, [messageStatus, userLogin]);
+
   const onClick = () => {
-    // console.log(listAccount);
-    const regEmail =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    console.log(inputValue);
     const strongRegex = /^(?=.*[0-9])(?=.*[A-Z])[a-zA-Z0-9]{7,20}$/;
-    // ^(?=.*[A-Z])(?=.*\d).{7,20}$
-    if (!regEmail.test(inputValue.email)) {
-      setMessageError(TypeError.INCORRECT_EMAIL);
-    } else if (inputValue.email === "" || inputValue.password === "") {
+    const userNameRegex = /^[a-z]{5,15}$/;
+    const phoneRegex = /^\d{9,11}$/;
+    if (
+      inputValue.userName === "" ||
+      inputValue.fullName === "" ||
+      inputValue.password === "" ||
+      inputValue.confirmPassword === "" ||
+      inputValue.address === "" ||
+      inputValue.phone === "" ||
+      inputValue.date === "" ||
+      inputValue.sex === ""
+    ) {
       setMessageError(TypeError.EMPTY_MESSAGE);
     } else if (!strongRegex.test(inputValue.password)) {
       setMessageError(TypeError.INCORRECT_PASSWORDRG);
+    } else if (inputValue.password !== inputValue.confirmPassword) {
+      setMessageError(TypeError.INCORRECT_CONFIRM_PASSWORD);
+    } else if (!userNameRegex.test(inputValue.userName)) {
+      setMessageError(TypeError.INCORRECT_USER_NAME);
+    } else if (!phoneRegex.test(inputValue.phone)) {
+      setMessageError(TypeError.INCORRECT_PHONE);
     } else {
       setMessageError("");
+      const data = {
+        tenDangNhap: inputValue.userName,
+        matKhau: inputValue.password,
+        hoTen: inputValue.fullName,
+        soDienThoai: inputValue.phone,
+        gioiTinh: inputValue.sex === "Nam" ? 0 : 1,
+        ngaySinh: inputValue.date,
+        diaChi: inputValue.address,
+      };
+      register(data);
     }
   };
 
@@ -151,6 +206,25 @@ export default function Login() {
               );
             }
           })}
+          <div className="profile-radio">
+            <label>Giới tính</label>
+            <input
+              onChange={onChange}
+              type="radio"
+              name="sex"
+              value="Nam"
+              checked={inputValue.sex === "Nam"}
+            />{" "}
+            Nam
+            <input
+              onChange={onChange}
+              type="radio"
+              name="sex"
+              value="Nữ"
+              checked={inputValue.sex === "Nữ"}
+            />{" "}
+            Nữ
+          </div>
           <div className="register-password-container">
             <InputBase
               attributes={attributesInput.password}
@@ -199,3 +273,20 @@ export default function Login() {
     </div>
   );
 }
+
+const mapStateToProps = (state, ownProps) => {
+  const userLogin = state.user.currentUser;
+
+  const messageStatus = state.user.currentMessage;
+  return { messageStatus, userLogin };
+};
+const mapDispatchToProps = (dispatch) => ({
+  register: (data) => dispatch(register(data)),
+});
+
+const RegisterContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Register);
+
+export default RegisterContainer;

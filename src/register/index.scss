@@ -21,7 +21,6 @@
 .register {
   display: flex;
   background-color: #f6f5f7;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   font-family: "Poppins", sans-serif;
@@ -33,6 +32,22 @@
   &-password-container {
     position: relative;
     justify-content: center;
+  }
+
+  .profile-radio {
+    float: left;
+    width: 100%;
+    label {
+      color: black;
+      width: 110px;
+      display: inline-block;
+      margin-right: 5px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    input {
+      margin: 5px;
+    }
   }
 
   &-confirm-password-container {

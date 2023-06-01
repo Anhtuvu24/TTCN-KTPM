@@ -1,35 +1,34 @@
-export const getListAccount = (data) => ({
-  type: "GET_LIST_ACCOUNT",
+export const getListAccount = () => {
+  return {
+    type: "GET_LIST_ACCOUNT",
+  };
+};
+
+export const login = (data) => ({
+  type: "LOGIN",
   payload: data,
 });
 
-// export const addTodoSG = (data) => {
-//   debugger;
-//   return {
-//     type: "ADD_TODO_SG",
-//     payload: data,
-//   };
-// };
+export const updateUser = (data) => ({
+  type: "UPDATE_USER",
+  payload: data,
+});
 
-// export const removeTodoSG = (data) => {
-//   debugger;
-//   return {
-//     type: "REMOVE_TODO_SG",
-//     payload: data,
-//   };
-// };
+export const register = (data) => ({
+  type: "REGISTER",
+  payload: data,
+});
 
-// export const activeTodoSG = (data) => ({
-//   type: "ACTIVE_TODO_SG",
-//   payload: data,
-// });
+export const deleteUser = (data) => {
+  return {
+    type: "DELETE_USER",
+    payload: data,
+  };
+};
 
-// export const editTodoSG = (data) => ({
-//   type: "EDIT_TODO_SG",
-//   payload: data,
-// });
-
-// export const checkAllSG = (data) => ({
-//   type: "CHECK_ALL_SG",
-//   payload: data,
-// });
+export const updateUserOnTable = (data) => {
+  return {
+    type: "UPDATE_USER_ON_TABLE",
+    payload: data,
+  };
+};

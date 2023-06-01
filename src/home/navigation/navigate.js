@@ -1,10 +1,13 @@
 import React from "react";
 import { DownOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 // Style
 import "./index.scss";
 
 function Navigation(props) {
+  const { setIdProduct } = props;
+  const navigate = useNavigate();
   const items = {
     home: {
       text: "Trang chủ",
@@ -72,29 +75,25 @@ function Navigation(props) {
       text: "Áo trẻ em",
     },
   };
-  const onMouseEnter = () => {
-    // console.log(focusMenuChild);
-    // setNavChildVisible(true);
-  };
-  const onMouseLeave = () => {
-    //setNavChildVisible(false);
-  };
-  const onEnterChild = () => {
-    //setFocusMenuChild(true);
-  };
-  const onLeave = () => {
-    // if (!focusMenuChild) {
-    //   setNavChildVisible(false);
-    // }
+
+  const onClick = (typeItemNav) => {
+    switch (typeItemNav) {
+      case "Trang chủ":
+        navigate("/");
+        setIdProduct(null);
+        break;
+      default:
+        console.log("Test");
+        break;
+    }
   };
   return (
     <div className="nav-Container">
       {Object.keys(items).map((key) => {
         return (
           <div
+            onClick={() => onClick(items[key].text)}
             className="item-container"
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onLeave}
           >
             <div className="item-nav">
               <p>{`${items[key].text}`}</p>
@@ -105,11 +104,7 @@ function Navigation(props) {
               )}
             </div>
             {items[key].firstChild && (
-              <div
-                onMouseLeave={onMouseLeave}
-                onMouseEnter={onEnterChild}
-                className={"nav-child"}
-              >
+              <div className={"nav-child"}>
                 {items[key].firstChild.map((keyChild) => {
                   return (
                     <div key={keyChild.id} className="nav-child-item">

@@ -1,0 +1,79 @@
+.admin-container {
+  padding: 0px 30px;
+  h1 {
+    width: 100%;
+    text-align: center;
+    background-color: aliceblue;
+    padding: 5px;
+  }
+  .back-home {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100px;
+    height: 30px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .body {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    .menu {
+      position: relative;
+      padding: 15px;
+      display: flex;
+      border: solid 0.5px #ccc;
+      border-radius: 3px;
+      max-height: 405px;
+      .title {
+        position: absolute;
+        padding: 5px;
+        display: inline;
+        background-color: #fff;
+        top: -20px;
+        left: 10px;
+      }
+      .select {
+        background-color: #33cccc;
+        color: whitesmoke;
+      }
+      .item {
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        margin-top: 15px;
+        margin-right: 10px;
+        padding: 10px;
+        line-height: 20px;
+        border-radius: 3px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+    .table {
+      position: relative;
+      padding: 30px 20px;
+      border: solid 0.5px #ccc;
+      border-radius: 3px;
+      flex: 1;
+      height: 518px;
+      margin-top: 70px;
+      h2 {
+        position: absolute;
+        padding: 5px;
+        display: inline;
+        background-color: #fff;
+        top: -20px;
+        left: 10px;
+      }
+      .add-btn {
+        float: right;
+        margin-right: 140px;
+        padding: 5px 10px;
+        margin-top: 10px;
+      }
+    }
+  }
+}

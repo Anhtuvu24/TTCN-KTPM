@@ -1,14 +1,12 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { getListAccount } from "../features/saga/sagaAccount/typeAccountSaga";
+import { login } from "../features/saga/sagaAccount/typeAccountSaga";
 import Login from "./login";
 
 const mapStateToProps = (state, ownProps) => {
-  const listAccount = state.listAccount.list;
   const userLogin = state.user.currentUser;
 
   return {
-    listAccount,
     userLogin,
     // getListActive: getListActive(todoListRD),
     // getListComplete: getListComplete(todoListRD),
@@ -31,7 +29,7 @@ const getListSelector = (state) => state;
 // });
 
 const mapDispatchToProps = (dispatch) => ({
-  getListAccount: () => dispatch(getListAccount()),
+  login: (input) => dispatch(login(input)),
 });
 
 const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(Login);

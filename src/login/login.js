@@ -18,20 +18,20 @@ import "./index.scss";
 import InputBase from "../inputBase/input";
 
 function Login(props) {
-  const { listAccount, getListAccount, userLogin } = props;
+  const { userLogin, login } = props;
   const [showPassword, seShowPassword] = useState(false);
   const [inputValue, setInputValue] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
   const attributesInput = {
-    email: {
+    username: {
       type: "text",
       className: "login-username input-text",
-      placeholder: "Email",
-      name: "email",
-      value: inputValue.email,
+      placeholder: "Username",
+      name: "username",
+      value: inputValue.username,
     },
     password: {
       type: showPassword ? "text" : "password",
@@ -47,14 +47,9 @@ function Login(props) {
   const [account, setAccount] = useState(null);
 
   useEffect(() => {
-    function fecthApi() {
-      getListAccount();
-    }
-    fecthApi();
     if (userLogin) {
       navigate("/");
     }
-    console.log(listAccount);
   }, [userLogin, account]);
 
   const onChange = (e) => {
@@ -76,24 +71,16 @@ function Login(props) {
   };
 
   const checkLogin = () => {
-    if (inputValue.email === "" || inputValue.password === "") {
+    if (inputValue.username === "" || inputValue.password === "") {
       setMessageError(TypeError.EMPTY_MESSAGE);
-    } else if (!account) {
+    } /*else if (!account) {
       setMessageError(TypeError.INCORRECT_MESSAGE);
-    }
+    }*/
   };
 
   const onClick = () => {
-    listAccount.map((item, index) => {
-      if (
-        inputValue.email === item.username &&
-        inputValue.password === item.password
-      ) {
-        setAccount(item);
-        dispatch(loginSuccess(item));
-        setMessageError("");
-      }
-    });
+    login(inputValue);
+    setMessageError("");
     setTimeout(() => {
       checkLogin();
     }, 300);
@@ -120,7 +107,7 @@ function Login(props) {
           <h1>Login here!</h1>
           <InputBase
             onKeyDown={onKeyPress}
-            attributes={attributesInput.email}
+            attributes={attributesInput.username}
             onChange={onChange}
           />
           <div className="login-password-container">
